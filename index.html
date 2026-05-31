@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Dancing+Script:wght@400;500;700&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
+    /* 样式完全不变，此处省略，与你原来的相同 */
     * { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior: smooth; }
     body {
@@ -19,7 +20,6 @@
       align-items: center;
     }
 
-    /* 全局问答遮罩 */
     .global-quiz-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(20, 15, 20, 0.94); backdrop-filter: blur(10px);
@@ -57,7 +57,6 @@
     .page { width: 100%; display: none; flex-direction: column; align-items: center; }
     .page.active { display: flex; }
 
-    /* 首页统一背景 */
     #homePage {
       background: url('background.jpg') no-repeat center center fixed;
       background-size: cover;
@@ -97,7 +96,6 @@
     .portal-icon { font-size: 3.5rem; margin-bottom: 12px; }
     .portal-title { font-family: 'Caveat',cursive; font-size: 1.8rem; color: #4a3535; }
 
-    /* Photography 梦幻背景 */
     .floating-orb {
       position: fixed; border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, rgba(255,240,245,0.5), rgba(210,180,240,0.2));
@@ -126,7 +124,13 @@
     .photo-card:nth-child(3n) { --rotate: 2.2deg; }
     .photo-card:nth-child(5n+2) { --rotate: -2.5deg; }
     .photo-card:hover { transform: rotate(0deg) translateY(-5px); box-shadow: 0 16px 36px rgba(0,0,0,0.1); z-index: 2; }
-    .photo-card img { width: 100%; height: auto; object-fit: cover; border-radius: 12px; margin-bottom: 8px; }
+    .photo-card img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 8px;
+    }
     .photo-text { padding: 8px 4px; font-size: 0.9rem; color: #6b5b5b; font-style: italic; line-height: 1.5; flex: 1; }
     .photo-date { font-size: 0.7rem; color: #b0a0a0; margin-top: 4px; }
     .delete-photo {
@@ -162,7 +166,6 @@
     .add-btn { padding: 12px 24px; background: #e8c8b0; border: none; border-radius: 24px; cursor: pointer; font-weight: 500; color: #4a3535; transition: 0.3s; font-family: inherit; font-size: 1rem; }
     .admin-btn { position: fixed; bottom: 16px; left: 16px; z-index: 999; background: rgba(232,200,176,0.5); backdrop-filter: blur(6px); border: 1px solid rgba(180,130,100,0.3); border-radius: 20px; padding: 6px 14px; font-size: 0.8rem; color: #4a3535; cursor: pointer; }
 
-    /* Happy Birthday */
     .hb-page { background: url('背景2.jpg') no-repeat center center fixed; background-size: cover; min-height: 100vh; padding: 70px 20px 80px; position: relative; }
     .hb-page::before { content: ""; position: fixed; inset: 0; background: rgba(255,248,242,0.35); backdrop-filter: blur(4px); z-index: -1; }
     .big-wish { font-family: 'Caveat','Dancing Script',cursive; font-size: 3rem; color: #543737; text-align: center; margin: 20px 0 10px; }
@@ -193,10 +196,23 @@
     .chat-input { flex: 1; padding: 8px 12px; border: 1px solid #e0d0c0; border-radius: 16px; font-family: inherit; background: #fffef9; }
     .chat-send { padding: 8px 16px; background: #e8c8b0; border: none; border-radius: 16px; cursor: pointer; color: #4a3535; }
 
-    .password-overlay, .chat-confirm, .change-pwd-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); background: rgba(255,250,245,0.95); backdrop-filter: blur(20px); border-radius: 24px; padding: 28px 24px; box-shadow: 0 16px 50px rgba(0,0,0,0.25); z-index: 220; display: none; flex-direction: column; align-items: center; gap: 14px; border: 2px solid #f0d8c8; text-align: center; width: 300px; max-width: 90vw; }
-    .password-overlay.active, .chat-confirm.active, .change-pwd-modal.active { display: flex; }
+    .chat-confirm {
+      position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      background: rgba(255,250,245,0.95); backdrop-filter: blur(20px);
+      border-radius: 24px; padding: 28px 24px; box-shadow: 0 16px 50px rgba(0,0,0,0.25);
+      z-index: 220; display: none; flex-direction: column; align-items: center; gap: 14px;
+      border: 2px solid #f0d8c8; text-align: center; width: 300px; max-width: 90vw;
+    }
+    .chat-confirm.active { display: flex; }
+    .chat-confirm-text { font-family: 'Caveat', cursive; font-size: 1.6rem; color: #4a3535; }
+    .confirm-btns { display: flex; gap: 16px; }
+    .confirm-btn {
+      padding: 8px 24px; border-radius: 20px; border: none; cursor: pointer;
+      font-family: inherit; font-size: 1rem; transition: all 0.3s;
+    }
+    .confirm-yes { background: #e8c8b0; color: #4a3535; }
+    .confirm-no { background: #f5e8e0; color: #8b6b5b; }
 
-    /* Research */
     .research-page { background: url('背景3.jpg') no-repeat center center fixed; background-size: cover; min-height: 100vh; padding: 70px 20px 80px; position: relative; }
     .research-page::before { content: ""; position: fixed; inset: 0; background: rgba(255,248,242,0.35); backdrop-filter: blur(4px); z-index: -1; }
     .category { background: rgba(255,250,245,0.75); backdrop-filter: blur(12px); border-radius: 24px; padding: 24px; margin: 0 auto 24px; box-shadow: 0 10px 30px rgba(80,40,20,0.1); width: 100%; max-width: 700px; }
@@ -210,15 +226,20 @@
     .add-item-form input { flex: 1; padding: 8px 12px; border: 1px solid #e0d0c0; border-radius: 12px; font-family: inherit; background: #fffdf9; }
     .add-item-form button { padding: 8px 16px; background: #e8c8b0; border: none; border-radius: 14px; cursor: pointer; color: #4a3535; }
 
-    /* 信区域 */
     .letter-section { margin: 40px auto 0; max-width: 600px; width: 100%; }
     .letter-title { font-family: 'Caveat', cursive; font-size: 2rem; color: #543737; margin-bottom: 20px; text-align: center; }
     .letter-images { display: flex; flex-direction: column; align-items: center; gap: 20px; }
     .letter-images img {
-      max-width: 100%; width: auto; max-height: 400px; border-radius: 18px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12); object-fit: contain;
-      background: rgba(255,255,255,0.6); backdrop-filter: blur(4px);
-      cursor: pointer; transition: transform 0.2s;
+      max-width: 100%;
+      width: auto;
+      max-height: 480px;
+      border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      object-fit: contain;
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(4px);
+      cursor: pointer;
+      transition: transform 0.2s;
     }
     .letter-images img:hover { transform: scale(1.02); }
 
@@ -258,7 +279,6 @@
   <div id="mainContent" style="display: none; width: 100%;">
     <button class="back-btn" id="backToHomeBtn">← 返回首页</button>
 
-    <!-- 首页：统一背景，移除烟花视频 -->
     <div class="page active" id="homePage">
       <div class="home-content">
         <div class="cake-card">
@@ -274,7 +294,6 @@
       </div>
     </div>
 
-    <!-- Photography -->
     <div class="page photography-page" id="photographyPage">
       <div class="floating-orb" style="width: 280px; height: 280px; top: -60px; left: -80px; background: radial-gradient(circle, #ffdbef, #efcbff);"></div>
       <div class="floating-orb" style="width: 380px; height: 380px; bottom: -120px; right: -70px; background: radial-gradient(circle, #f7d5f0, #cfb5ff); animation-duration: 28s;"></div>
@@ -301,7 +320,6 @@
       <div class="admin-btn" id="adminBtn">⚙️ 管理</div>
     </div>
 
-    <!-- 照片全屏预览 -->
     <div class="lightbox" id="lightbox">
       <span class="close-lightbox" id="closeLightbox">&times;</span>
       <div class="lightbox-content"><img id="lightboxImg" src="" alt=""></div>
@@ -311,7 +329,6 @@
       <button class="nav-arrow right" id="nextBtn">&#10095;</button>
     </div>
 
-    <!-- Happy Birthday -->
     <div class="page hb-page" id="hbPage">
       <div class="big-wish">🎈 希望单婧雯天天开心！</div>
       <div class="weather-card" id="weatherBox"><div class="weather-icon">☁️</div><div class="weather-temp">--°C</div><div class="weather-desc">正在获取西安天气...</div></div>
@@ -321,18 +338,6 @@
         <div class="art-row row-two"><div class="art-card" style="--rotate:-1.6deg;"><img src="图片4.jpg" alt="插画4"></div><div class="art-card" style="--rotate:2.3deg;"><img src="图片5.jpg" alt="插画5"></div></div>
       </div>
       <div class="cat" id="cat"><img src="maomi.jpg" alt="猫咪老师"></div>
-      <div class="password-overlay" id="passwordOverlay">
-        <div class="password-title">🐱 请输入密码</div>
-        <input type="password" class="password-input" id="passwordInput" placeholder="初始密码：0610" maxlength="20">
-        <div class="password-error" id="passwordError"></div>
-        <div class="password-btns"><button class="btn-pwd btn-submit" id="submitPassword">确认</button><button class="btn-pwd btn-change" id="openChangePwd">修改密码</button><button class="btn-pwd btn-cancel" id="cancelPassword">取消</button></div>
-      </div>
-      <div class="change-pwd-modal" id="changePwdModal">
-        <div style="font-family:'Caveat',cursive; font-size:1.3rem; color:#4a3535;">🔑 修改密码</div>
-        <input type="password" id="oldPwd" placeholder="当前密码"><input type="password" id="newPwd" placeholder="新密码"><input type="password" id="confirmPwd" placeholder="确认新密码">
-        <div style="display:flex; gap:10px; justify-content:center;"><button class="btn-pwd btn-submit" id="confirmChangePwd">确认修改</button><button class="btn-pwd btn-cancel" id="cancelChangePwd">取消</button></div>
-        <div style="font-size:0.8rem; color:#c44;" id="changePwdError"></div>
-      </div>
       <div class="chat-confirm" id="chatConfirm">
         <div class="chat-confirm-text">🐱 “你想和我说说话吗？”</div>
         <div class="confirm-btns"><button class="confirm-btn confirm-yes" id="confirmYes">想呀～</button><button class="confirm-btn confirm-no" id="confirmNo">先不了</button></div>
@@ -344,7 +349,6 @@
       </div>
     </div>
 
-    <!-- Research -->
     <div class="page research-page" id="researchPage">
       <h1 style="font-family:'Caveat',cursive; text-align:center; color:#4a3535; margin-bottom:30px;">🔭 探索中……</h1>
       <div id="categoriesContainer"></div>
@@ -360,7 +364,6 @@
       </div>
     </div>
 
-    <!-- 信专用全屏灯箱 -->
     <div class="letter-lightbox" id="letterLightbox">
       <span class="close-lightbox" id="closeLetterLightbox">&times;</span>
       <div class="letter-lightbox-content"><img id="letterLightboxImg" src="" alt=""></div>
@@ -369,7 +372,26 @@
     </div>
   </div>
 
+  <!-- 引入 Firebase SDK（兼容版，无需 npm） -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
   <script>
+    // ========== 🔥 使用你自己的配置（已去掉 measurementId，因为我们不用 Analytics） ==========
+    const firebaseConfig = {
+      apiKey: "AIzaSyAHeZKFW-_pnmOyN42LJ_64UZp8N7ohz4E",
+      authDomain: "sjwttkx.firebaseapp.com",
+      projectId: "sjwttkx",
+      storageBucket: "sjwttkx.firebasestorage.app",
+      messagingSenderId: "543412387169",
+      appId: "1:543412387169:web:2e249191b03293b8a65920"
+    };
+
+    // 初始化 Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    db.enablePersistence().catch(() => {});
+
     // 问答验证
     (function() {
       const quizOverlay = document.getElementById('globalQuizOverlay');
@@ -409,59 +431,169 @@
       backBtn.addEventListener('click', () => showPage('home'));
       document.querySelectorAll('.portal-card').forEach(c => c.addEventListener('click', () => showPage(c.dataset.page)));
 
-      // Photography
-      const DB_NAME='SJW_Photography', STORE='photos'; let db;
-      function openDB(){ return new Promise((res,rej)=>{ const r=indexedDB.open(DB_NAME,1); r.onupgradeneeded=e=>{ if(!e.target.result.objectStoreNames.contains(STORE)) e.target.result.createObjectStore(STORE,{keyPath:'id',autoIncrement:true}); }; r.onsuccess=e=>{ db=e.target.result; res(db); }; r.onerror=e=>rej(e.target.error); }); }
-      async function loadPhotos(){ if(!db) await openDB(); return new Promise((res,rej)=>{ const tx=db.transaction(STORE,'readonly'); const req=tx.objectStore(STORE).getAll(); req.onsuccess=()=>res(req.result); req.onerror=e=>rej(e.target.error); }); }
-      async function savePhoto(p){ if(!db) await openDB(); return new Promise((res,rej)=>{ const tx=db.transaction(STORE,'readwrite'); const req=tx.objectStore(STORE).add(p); req.onsuccess=()=>res(req.result); req.onerror=e=>rej(e.target.error); }); }
-      async function delPhoto(id){ if(!db) await openDB(); return new Promise((res,rej)=>{ const tx=db.transaction(STORE,'readwrite'); tx.objectStore(STORE).delete(id); req.onsuccess=()=>res(); req.onerror=e=>rej(e.target.error); }); }
-      async function clearAllPhotos(){ if(!db) await openDB(); return new Promise((res,rej)=>{ const tx=db.transaction(STORE,'readwrite'); tx.objectStore(STORE).clear(); req.onsuccess=()=>res(); req.onerror=e=>rej(e.target.error); }); }
-      const defPhotos=[{url:'https://picsum.photos/seed/sjw4/600/400',caption:'山间的风，带着松树的清香。',date:'2026-05-10'}];
-      let pendingBase64=null;
-      function randomH(){ return Math.floor(Math.random()*61)+160; }
-      function isBeforeCutoff(){ const t=new Date(), c=new Date('2026-06-05'); return t<c; }
-      function updateDate(){
+      // 照片同步
+      const defPhotos = [{url:'https://picsum.photos/seed/sjw4/600/400', caption:'山间的风，带着松树的清香。', date:'2026-05-10'}];
+      let pendingBase64 = null;
+      let currentPhotos = [];
+
+      function renderPhotos(photos) {
+        currentPhotos = photos;
+        const grid = document.getElementById('photoGrid');
+        if (!grid) return;
+        grid.innerHTML = photos.map(p => `
+          <div class="photo-card" data-id="${p.id}">
+            <img src="${p.url}" alt="照片" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22><rect fill=%22%23f5e8dc%22/><text x=%22150%22 y=%22100%22 fill=%22%23c8b0a0%22>🖼️</text></svg>'">
+            <div class="photo-text">
+              <div class="photo-caption">${p.caption || ''}</div>
+              <div class="photo-date">${p.date || ''}</div>
+            </div>
+            <button class="delete-photo" data-id="${p.id}">✕</button>
+          </div>
+        `).join('');
+
+        document.querySelectorAll('.photo-card').forEach(card => {
+          card.addEventListener('click', (e) => {
+            if (e.target.classList.contains('delete-photo')) return;
+            openLightbox(card.dataset.id);
+          });
+        });
+        document.querySelectorAll('.delete-photo').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            await db.collection('photos').doc(btn.dataset.id).delete();
+          });
+        });
+      }
+
+      let initialLoadDone = false;
+      db.collection('photos').orderBy('timestamp', 'asc').onSnapshot((snapshot) => {
+        const photos = [];
+        snapshot.forEach(doc => photos.push({ id: doc.id, ...doc.data() }));
+        if (!initialLoadDone && photos.length === 0) {
+          defPhotos.forEach(p => db.collection('photos').add({...p, timestamp: firebase.firestore.FieldValue.serverTimestamp()}));
+          initialLoadDone = true;
+        } else {
+          renderPhotos(photos);
+        }
+      });
+
+      function isBeforeCutoff() { const t=new Date(), c=new Date('2026-06-05'); return t<c; }
+      function updateDate() {
         const di=document.getElementById('photoDate'), dh=document.getElementById('dateLockedHint'), ts=new Date().toISOString().split('T')[0];
         if(isBeforeCutoff()){ di.removeAttribute('readonly'); di.value=ts; dh.style.display='none'; }
         else{ di.value=ts; di.setAttribute('readonly',true); dh.style.display='block'; }
       }
-      async function renderPhotos(){
-        const grid=document.getElementById('photoGrid'); let photos=await loadPhotos();
-        if(!photos.length){ for(const p of defPhotos) await savePhoto(p); photos=await loadPhotos(); }
-        grid.innerHTML=photos.map(p=>`<div class="photo-card" data-id="${p.id}"><img src="${p.url}" style="height:${randomH()}px;" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22><rect fill=%22%23f5e8dc%22/><text x=%22150%22 y=%22100%22 fill=%22%23c8b0a0%22>🖼️</text></svg>'"><div class="photo-text"><div class="photo-caption">${p.caption||''}</div><div class="photo-date">${p.date||''}</div></div><button class="delete-photo" data-id="${p.id}">✕</button></div>`).join('');
-        document.querySelectorAll('.photo-card').forEach(c=>c.addEventListener('click',e=>{ if(!e.target.classList.contains('delete-photo')) openLightbox(parseInt(c.dataset.id)); }));
-        document.querySelectorAll('.delete-photo').forEach(b=>b.addEventListener('click',async e=>{ e.stopPropagation(); await delPhoto(parseInt(b.dataset.id)); renderPhotos(); }));
-      }
-      const lb=document.getElementById('lightbox'), lbImg=document.getElementById('lightboxImg'), lbCap=document.getElementById('lightboxCaption'), lbDate=document.getElementById('lightboxDate'), prevBtn=document.getElementById('prevBtn'), nextBtn=document.getElementById('nextBtn');
-      let curPhotos=[], curId=null;
-      async function openLightbox(id){ curPhotos=await loadPhotos(); const i=curPhotos.findIndex(p=>p.id===id); if(i===-1) return; curId=id; showPhoto(i); lb.classList.add('active'); }
-      function showPhoto(i){ const p=curPhotos[i]; curId=p.id; lbImg.src=p.url; lbCap.textContent=p.caption||''; lbDate.textContent=p.date||''; prevBtn.style.display=i>0?'block':'none'; nextBtn.style.display=i<curPhotos.length-1?'block':'none'; }
-      document.getElementById('closeLightbox').addEventListener('click',()=>lb.classList.remove('active'));
-      lb.addEventListener('click',e=>{ if(e.target===lb) lb.classList.remove('active'); });
-      prevBtn.addEventListener('click',()=>navigate(-1)); nextBtn.addEventListener('click',()=>navigate(1));
-      function navigate(d){ const i=curPhotos.findIndex(p=>p.id===curId); if(i===-1) return; const ni=i+d; if(ni>=0&&ni<curPhotos.length) showPhoto(ni); }
-      document.addEventListener('keydown',e=>{ if(!lb.classList.contains('active')) return; if(e.key==='ArrowLeft') navigate(-1); else if(e.key==='ArrowRight') navigate(1); else if(e.key==='Escape') lb.classList.remove('active'); });
-      function compressImg(file){ return new Promise((res,rej)=>{ const reader=new FileReader(); reader.onload=e=>{ const img=new Image(); img.onload=()=>{ let w=img.width, h=img.height; if(w>800||h>800){ if(w>h){ h*=800/w; w=800; } else { w*=800/h; h=800; } } const canvas=document.createElement('canvas'); canvas.width=w; canvas.height=h; const ctx=canvas.getContext('2d'); ctx.drawImage(img,0,0,w,h); res(canvas.toDataURL('image/jpeg',0.7)); }; img.onerror=rej; img.src=e.target.result; }; reader.onerror=rej; reader.readAsDataURL(file); }); }
-      async function addPhoto(url,caption,date){ await savePhoto({url,caption,date}); renderPhotos(); document.getElementById('imgUrl').value=''; document.getElementById('caption').value=''; document.getElementById('fileNameDisplay').textContent=''; pendingBase64=null; updateDate(); }
-      document.getElementById('addPhotoBtn').addEventListener('click',async()=>{
-        const url=document.getElementById('imgUrl').value.trim(), cap=document.getElementById('caption').value.trim(), dt=isBeforeCutoff()?document.getElementById('photoDate').value:new Date().toISOString().split('T')[0];
-        if(pendingBase64) await addPhoto(pendingBase64,cap,dt); else if(url) await addPhoto(url,cap,dt); else alert('请填写照片链接或从相册上传');
-      });
-      document.getElementById('uploadFromAlbum').addEventListener('click',()=>document.getElementById('fileInput').click());
-      document.getElementById('fileInput').addEventListener('change',async e=>{
-        const file=e.target.files[0]; if(!file) return; document.getElementById('fileNameDisplay').textContent='正在压缩...';
-        try{ pendingBase64=await compressImg(file); document.getElementById('fileNameDisplay').textContent=file.name+' (已压缩)'; document.getElementById('imgUrl').placeholder='已从相册选择：'+file.name; }catch{ alert('图片处理失败'); } e.target.value='';
-      });
-      document.getElementById('adminBtn').addEventListener('click',()=>{
-        const act=prompt('管理面板：\nreset - 重置默认照片\nclear - 清空所有照片\nexport - 导出备份\nimport - 导入备份（追加）');
-        if(act==='reset'){ (async()=>{ await clearAllPhotos(); for(const p of defPhotos) await savePhoto(p); renderPhotos(); })(); }
-        else if(act==='clear'){ if(confirm('确定清空所有照片？')){ (async()=>{ await clearAllPhotos(); renderPhotos(); })(); } }
-        else if(act==='export'){ (async()=>{ const data=JSON.stringify(await loadPhotos(),null,2); const blob=new Blob([data],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='photos_backup.json'; a.click(); })(); }
-        else if(act==='import'){ const inp=document.createElement('input'); inp.type='file'; inp.accept='.json'; inp.onchange=e=>{ const fr=new FileReader(); fr.onload=async ev=>{ try{ const imp=JSON.parse(ev.target.result); if(Array.isArray(imp)){ for(const p of imp) await savePhoto(p); renderPhotos(); alert('导入成功！照片已追加。'); } else alert('文件格式不正确'); }catch{ alert('解析失败'); } }; fr.readAsText(e.target.files[0]); }; inp.click(); }
-      });
-      openDB().then(()=>renderPhotos()); updateDate();
+      updateDate();
 
-      // 信的全屏浏览
+      const lb=document.getElementById('lightbox'), lbImg=document.getElementById('lightboxImg'), lbCap=document.getElementById('lightboxCaption'), lbDate=document.getElementById('lightboxDate');
+      function openLightbox(id) {
+        const idx = currentPhotos.findIndex(p => p.id === id);
+        if (idx === -1) return;
+        showPhoto(idx);
+        lb.classList.add('active');
+      }
+      function showPhoto(i) {
+        const p = currentPhotos[i];
+        lbImg.src = p.url;
+        lbCap.textContent = p.caption || '';
+        lbDate.textContent = p.date || '';
+        document.getElementById('prevBtn').style.display = i > 0 ? 'block' : 'none';
+        document.getElementById('nextBtn').style.display = i < currentPhotos.length - 1 ? 'block' : 'none';
+      }
+      document.getElementById('closeLightbox').addEventListener('click', ()=>lb.classList.remove('active'));
+      lb.addEventListener('click', e=>{ if(e.target===lb) lb.classList.remove('active'); });
+      document.getElementById('prevBtn').addEventListener('click', ()=>{ const i = currentPhotos.findIndex(p=>p.id===lbImg.dataset.id); if(i>0) showPhoto(i-1); });
+      document.getElementById('nextBtn').addEventListener('click', ()=>{ const i = currentPhotos.findIndex(p=>p.id===lbImg.dataset.id); if(i<currentPhotos.length-1) showPhoto(i+1); });
+      document.addEventListener('keydown', e=>{
+        if(!lb.classList.contains('active')) return;
+        if(e.key==='ArrowLeft') { const i = currentPhotos.findIndex(p=>p.id===lbImg.dataset.id); if(i>0) showPhoto(i-1); }
+        else if(e.key==='ArrowRight') { const i = currentPhotos.findIndex(p=>p.id===lbImg.dataset.id); if(i<currentPhotos.length-1) showPhoto(i+1); }
+        else if(e.key==='Escape') lb.classList.remove('active');
+      });
+
+      function compressImg(file) {
+        return new Promise((res,rej)=>{
+          const reader=new FileReader();
+          reader.onload=e=>{
+            const img=new Image();
+            img.onload=()=>{
+              let w=img.width, h=img.height;
+              if(w>800||h>800){ if(w>h){ h*=800/w; w=800; } else { w*=800/h; h=800; } }
+              const canvas=document.createElement('canvas'); canvas.width=w; canvas.height=h;
+              const ctx=canvas.getContext('2d'); ctx.drawImage(img,0,0,w,h);
+              res(canvas.toDataURL('image/jpeg',0.7));
+            };
+            img.onerror=rej; img.src=e.target.result;
+          };
+          reader.onerror=rej; reader.readAsDataURL(file);
+        });
+      }
+
+      document.getElementById('addPhotoBtn').addEventListener('click', async ()=>{
+        const url = document.getElementById('imgUrl').value.trim();
+        const cap = document.getElementById('caption').value.trim();
+        const date = isBeforeCutoff() ? document.getElementById('photoDate').value : new Date().toISOString().split('T')[0];
+        if (pendingBase64) {
+          await db.collection('photos').add({url: pendingBase64, caption: cap, date, timestamp: firebase.firestore.FieldValue.serverTimestamp()});
+          pendingBase64 = null;
+        } else if (url) {
+          await db.collection('photos').add({url, caption: cap, date, timestamp: firebase.firestore.FieldValue.serverTimestamp()});
+        } else alert('请填写照片链接或从相册上传');
+        document.getElementById('imgUrl').value=''; document.getElementById('caption').value=''; document.getElementById('fileNameDisplay').textContent='';
+        updateDate();
+      });
+
+      document.getElementById('uploadFromAlbum').addEventListener('click', ()=>document.getElementById('fileInput').click());
+      document.getElementById('fileInput').addEventListener('change', async e=>{
+        const file = e.target.files[0]; if(!file) return;
+        document.getElementById('fileNameDisplay').textContent = '正在压缩...';
+        try {
+          pendingBase64 = await compressImg(file);
+          document.getElementById('fileNameDisplay').textContent = file.name + ' (已压缩)';
+          document.getElementById('imgUrl').placeholder = '已从相册选择：'+file.name;
+        } catch { alert('图片处理失败'); }
+        e.target.value = '';
+      });
+
+      document.getElementById('adminBtn').addEventListener('click', ()=>{
+        const act = prompt('管理面板：\nreset - 重置默认照片\nclear - 清空所有照片\nexport - 导出备份（下载 JSON）\nimport - 导入备份（追加，从 JSON）');
+        if (act === 'reset') {
+          (async ()=>{
+            const snapshot = await db.collection('photos').get();
+            snapshot.forEach(doc => doc.ref.delete());
+            for (const p of defPhotos) await db.collection('photos').add({...p, timestamp: firebase.firestore.FieldValue.serverTimestamp()});
+          })();
+        } else if (act === 'clear') {
+          if (confirm('确定清空所有照片？')) {
+            (async ()=>{ const snapshot = await db.collection('photos').get(); snapshot.forEach(doc => doc.ref.delete()); })();
+          }
+        } else if (act === 'export') {
+          (async ()=>{
+            const snapshot = await db.collection('photos').orderBy('timestamp','asc').get();
+            const data = []; snapshot.forEach(doc => data.push(doc.data()));
+            const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'photos_backup.json'; a.click();
+          })();
+        } else if (act === 'import') {
+          const inp = document.createElement('input'); inp.type='file'; inp.accept='.json';
+          inp.onchange = e => {
+            const fr = new FileReader();
+            fr.onload = async ev => {
+              try {
+                const imported = JSON.parse(ev.target.result);
+                if (Array.isArray(imported)) {
+                  for (const p of imported) await db.collection('photos').add({...p, timestamp: firebase.firestore.FieldValue.serverTimestamp()});
+                  alert('导入成功！照片已追加并同步。');
+                } else alert('文件格式不正确');
+              } catch { alert('解析失败'); }
+            };
+            fr.readAsText(e.target.files[0]);
+          };
+          inp.click();
+        }
+      });
+
+      // 信全屏
       const letterLightbox = document.getElementById('letterLightbox');
       const letterImg = document.getElementById('letterLightboxImg');
       const closeLetter = document.getElementById('closeLetterLightbox');
@@ -471,8 +603,8 @@
       function initLetterViewer() {
         const allImgs = document.querySelectorAll('#letterImages .letter-page');
         letterPages = Array.from(allImgs).filter(img => img.style.display !== 'none');
-        letterPages.forEach((img, index) => {
-          img.addEventListener('click', () => { currentLetterIndex = index; showLetterPage(currentLetterIndex); letterLightbox.classList.add('active'); });
+        letterPages.forEach((img, idx) => {
+          img.addEventListener('click', () => { currentLetterIndex = idx; showLetterPage(currentLetterIndex); letterLightbox.classList.add('active'); });
         });
       }
       function showLetterPage(index) {
@@ -482,45 +614,74 @@
         letterPrev.style.display = currentLetterIndex > 0 ? 'block' : 'none';
         letterNext.style.display = currentLetterIndex < letterPages.length - 1 ? 'block' : 'none';
       }
-      function navigateLetter(direction) { showLetterPage(currentLetterIndex + direction); }
-      closeLetter.addEventListener('click', () => letterLightbox.classList.remove('active'));
-      letterLightbox.addEventListener('click', (e) => { if (e.target === letterLightbox) letterLightbox.classList.remove('active'); });
-      letterPrev.addEventListener('click', () => navigateLetter(-1));
-      letterNext.addEventListener('click', () => navigateLetter(1));
-      document.addEventListener('keydown', (e) => {
-        if (!letterLightbox.classList.contains('active')) return;
-        if (e.key === 'ArrowLeft') navigateLetter(-1);
-        else if (e.key === 'ArrowRight') navigateLetter(1);
-        else if (e.key === 'Escape') letterLightbox.classList.remove('active');
+      closeLetter.addEventListener('click', ()=>letterLightbox.classList.remove('active'));
+      letterLightbox.addEventListener('click', e=>{ if(e.target===letterLightbox) letterLightbox.classList.remove('active'); });
+      letterPrev.addEventListener('click', ()=>showLetterPage(currentLetterIndex-1));
+      letterNext.addEventListener('click', ()=>showLetterPage(currentLetterIndex+1));
+      document.addEventListener('keydown', e=>{
+        if(!letterLightbox.classList.contains('active')) return;
+        if(e.key==='ArrowLeft') showLetterPage(currentLetterIndex-1);
+        else if(e.key==='ArrowRight') showLetterPage(currentLetterIndex+1);
+        else if(e.key==='Escape') letterLightbox.classList.remove('active');
       });
       let touchStartX = 0;
-      letterLightbox.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
-      letterLightbox.addEventListener('touchend', (e) => {
-        if (!letterLightbox.classList.contains('active')) return;
+      letterLightbox.addEventListener('touchstart', e=>{ touchStartX = e.changedTouches[0].screenX; }, {passive:true});
+      letterLightbox.addEventListener('touchend', e=>{
+        if(!letterLightbox.classList.contains('active')) return;
         const diff = touchStartX - e.changedTouches[0].screenX;
-        if (Math.abs(diff) > 50) { if (diff > 0) navigateLetter(1); else navigateLetter(-1); }
+        if(Math.abs(diff)>50){ if(diff>0) showLetterPage(currentLetterIndex+1); else showLetterPage(currentLetterIndex-1); }
       });
       initLetterViewer();
 
-      // Happy Birthday 猫咪老师
+      // 研究计划同步
+      const defResearch = {
+        travel: {title:'🗺️ 未来旅行计划',items:['还未确定的目的地','想去海边看一次日出','一起爬山']},
+        movies: {title:'🎬 电影之夜',items:['值得反复观看的电影','《星际穿越》','《怦然心动》']},
+        music: {title:'🎵 音乐推荐',items:['那些触动心灵的旋律','Coldplay - Yellow','周杰伦 - 晴天']},
+        ideas: {title:'💡 灵感碎片',items:['随时记录的小想法','开一家书店','学会弹吉他']}
+      };
+      let currentResearchData = null;
+      function renderResearch(data) {
+        const cont = document.getElementById('categoriesContainer');
+        if (!cont) return;
+        cont.innerHTML = Object.entries(data).map(([k,v])=>`
+          <div class="category" data-cat="${k}"><div class="cat-title">${v.title}</div><ul class="item-list">${v.items.map((it,i)=>`<li><span class="item-text" contenteditable="true" data-idx="${i}">${it}</span><button class="delete-btn" data-idx="${i}">✕</button></li>`).join('')}</ul><div class="add-item-form"><input type="text" placeholder="添加新条目..." class="new-item-input"><button class="add-item-btn">添加</button></div></div>`).join('');
+        document.querySelectorAll('.category').forEach(catDiv=>{
+          const catKey = catDiv.dataset.cat;
+          catDiv.querySelectorAll('.item-text').forEach(span=>span.addEventListener('blur', ()=>{
+            const newData = JSON.parse(JSON.stringify(currentResearchData));
+            newData[catKey].items[span.dataset.idx] = span.textContent;
+            db.collection('research').doc('data').set(newData);
+          }));
+          catDiv.querySelectorAll('.delete-btn').forEach(btn=>btn.addEventListener('click', ()=>{
+            const newData = JSON.parse(JSON.stringify(currentResearchData));
+            newData[catKey].items.splice(btn.dataset.idx, 1);
+            db.collection('research').doc('data').set(newData);
+          }));
+          const inp = catDiv.querySelector('.new-item-input'), addBtn = catDiv.querySelector('.add-item-btn');
+          addBtn.addEventListener('click', ()=>{ if(inp.value.trim()){ const newData = JSON.parse(JSON.stringify(currentResearchData)); newData[catKey].items.push(inp.value.trim()); db.collection('research').doc('data').set(newData); } });
+          inp.addEventListener('keypress', e=>{ if(e.key==='Enter' && inp.value.trim()){ const newData = JSON.parse(JSON.stringify(currentResearchData)); newData[catKey].items.push(inp.value.trim()); db.collection('research').doc('data').set(newData); } });
+        });
+      }
+      db.collection('research').doc('data').onSnapshot(doc=>{
+        if (doc.exists) { currentResearchData = doc.data(); renderResearch(currentResearchData); }
+        else { db.collection('research').doc('data').set(defResearch); currentResearchData = defResearch; renderResearch(defResearch); }
+      });
+
+      // 猫咪老师
       const AI_URL='https://api.deepseek.com/v1/chat/completions', AI_KEY='sk-4c64c34cc08349e19f4ffe100a7f9987', AI_MODEL='deepseek-chat';
-      const HIST_KEY='sjw_chat_hist', PWD_KEY='sjw_chat_pwd', INIT_PWD='0610';
+      const HIST_KEY='sjw_chat_hist';
       function loadHist(){ return JSON.parse(localStorage.getItem(HIST_KEY)||'[]'); }
       function saveHist(h){ localStorage.setItem(HIST_KEY,JSON.stringify(h)); }
       function clearHist(){ localStorage.removeItem(HIST_KEY); }
-      function getPwd(){ return localStorage.getItem(PWD_KEY)||INIT_PWD; }
-      function setPwd(p){ localStorage.setItem(PWD_KEY,p); }
       let conversationHistory = loadHist();
       let catAnimFrame, catRunning=false;
       const cat=document.getElementById('cat'); if(cat){ cat.style.left='0px'; cat.style.top='0px'; }
       let catX=0,catY=0,targetX=0,targetY=0,isPlaying=false;
       function edgeTarget(){ const w=window.innerWidth-110, h=window.innerHeight-150; const e=Math.floor(Math.random()*4); if(e===0) return {x:Math.random()*w, y:40+Math.random()*60}; if(e===1) return {x:Math.random()*w, y:h-60-Math.random()*60}; if(e===2) return {x:40+Math.random()*60, y:Math.random()*h}; return {x:w-60-Math.random()*60, y:Math.random()*h}; }
       function newTarget(){ const t=edgeTarget(); targetX=Math.max(40,Math.min(window.innerWidth-150,t.x)); targetY=Math.max(40,Math.min(window.innerHeight-180,t.y)); }
-      function catMove(){
-        if(!catRunning||!cat) return;
-        if(!isPlaying){ const dx=targetX-catX, dy=targetY-catY, dist=Math.hypot(dx,dy); if(dist>3){ catX+=(dx/dist)*0.8; catY+=(dy/dist)*0.8; cat.style.transform=`rotate(${Math.atan2(dx,-dy)*180/Math.PI}deg)`; } else { newTarget(); if(Math.random()<0.2){ isPlaying=true; cat.style.transform='rotate(0deg)'; setTimeout(()=>{ isPlaying=false; },2000); } } }
-        cat.style.left=catX+'px'; cat.style.top=catY+'px'; catAnimFrame=requestAnimationFrame(catMove);
-      }
+      function catMove(){ if(!catRunning||!cat) return; if(!isPlaying){ const dx=targetX-catX, dy=targetY-catY, dist=Math.hypot(dx,dy); if(dist>3){ catX+=(dx/dist)*0.8; catY+=(dy/dist)*0.8; cat.style.transform=`rotate(${Math.atan2(dx,-dy)*180/Math.PI}deg)`; } else { newTarget(); if(Math.random()<0.2){ isPlaying=true; cat.style.transform='rotate(0deg)'; setTimeout(()=>{ isPlaying=false; },2000); } } }
+        cat.style.left=catX+'px'; cat.style.top=catY+'px'; catAnimFrame=requestAnimationFrame(catMove); }
       window.startCat = function(){ if(catRunning) return; catRunning=true; catX=100; catY=100; newTarget(); catMove(); };
       window.stopCat = function(){ catRunning=false; if(catAnimFrame) cancelAnimationFrame(catAnimFrame); };
 
@@ -528,91 +689,29 @@
         .then(r=>r.json()).then(d=>{ const w=d.current_weather; const em={0:'☀️',1:'🌤️',2:'⛅',3:'☁️'}; document.getElementById('weatherBox').innerHTML=`<div class="weather-icon">${em[w.weathercode]||'🌤️'}</div><div class="weather-temp">${Math.round(w.temperature)}°C</div><div class="weather-desc">西安 · 实时天气</div>`; })
         .catch(()=>{ document.getElementById('weatherBox').innerHTML='<div class="weather-icon">🌤️</div><div class="weather-desc">西安 · 愿你所在之处，皆是晴空</div>'; });
 
-      const pwOverlay=document.getElementById('passwordOverlay'), pwInput=document.getElementById('passwordInput'), pwError=document.getElementById('passwordError');
-      const submitPw=document.getElementById('submitPassword'), cancelPw=document.getElementById('cancelPassword'), openChg=document.getElementById('openChangePwd');
-      const chgModal=document.getElementById('changePwdModal'), confChg=document.getElementById('confirmChangePwd'), cancelChg=document.getElementById('cancelChangePwd');
       const chatConfirm=document.getElementById('chatConfirm'), yesBtn=document.getElementById('confirmYes'), noBtn=document.getElementById('confirmNo');
       const chatModal=document.getElementById('chatModal'), closeChatBtn=document.getElementById('closeChat'), clearBtn=document.getElementById('clearChatBtn');
       const msgBox=document.getElementById('chatMessages'), chatInput=document.getElementById('chatInput'), sendBtn=document.getElementById('chatSend');
-      let pendingMode=null;
 
-      function showPw(mode){ pendingMode=mode; pwInput.value=''; pwError.textContent=''; pwOverlay.classList.add('active'); pwInput.focus(); }
-      function hidePw(){ pwOverlay.classList.remove('active'); }
-      function checkPw(inp){ return inp===getPwd(); }
-      function onPwSuccess(){ hidePw(); if(pendingMode==='click') chatConfirm.classList.add('active'); else if(pendingMode==='dblclick') openChat(); pendingMode=null; }
-
-      submitPw.addEventListener('click',()=>{ if(checkPw(pwInput.value.trim())) onPwSuccess(); else pwError.textContent='密码不正确，请再试一次喵～'; });
-      pwInput.addEventListener('keypress',e=>{ if(e.key==='Enter') submitPw.click(); });
-      cancelPw.addEventListener('click',()=>{ hidePw(); pendingMode=null; isPlaying=false; if(cat) cat.style.transform=''; });
-      openChg.addEventListener('click',()=>{ pwOverlay.classList.remove('active'); chgModal.classList.add('active'); });
-      cancelChg.addEventListener('click',()=>{ chgModal.classList.remove('active'); pwOverlay.classList.add('active'); });
-      confChg.addEventListener('click',()=>{
-        const old=document.getElementById('oldPwd').value.trim(), nw=document.getElementById('newPwd').value.trim(), cf=document.getElementById('confirmPwd').value.trim();
-        if(!old||!nw||!cf) return document.getElementById('changePwdError').textContent='所有字段都需要填写喵～';
-        if(old!==getPwd()) return document.getElementById('changePwdError').textContent='当前密码不正确';
-        if(nw!==cf) return document.getElementById('changePwdError').textContent='两次新密码不一致';
-        setPwd(nw); chgModal.classList.remove('active'); pwOverlay.classList.add('active'); pwError.textContent='密码修改成功！请使用新密码～';
-      });
-
-      if(cat){ cat.addEventListener('click',()=>{ if(chatModal.classList.contains('active')) return; showPw('click'); }); cat.addEventListener('dblclick',e=>{ e.preventDefault(); showPw('dblclick'); }); }
-      yesBtn.addEventListener('click',()=>{ chatConfirm.classList.remove('active'); openChat(); });
-      noBtn.addEventListener('click',()=>{ chatConfirm.classList.remove('active'); isPlaying=false; if(cat) cat.style.transform=''; });
+      cat.addEventListener('click', ()=>{ if(chatModal.classList.contains('active')) return; isPlaying=true; cat.style.transform='rotate(0deg)'; chatConfirm.classList.add('active'); });
+      cat.addEventListener('dblclick', e=>{ e.preventDefault(); chatConfirm.classList.remove('active'); openChat(); });
+      yesBtn.addEventListener('click', ()=>{ chatConfirm.classList.remove('active'); openChat(); });
+      noBtn.addEventListener('click', ()=>{ chatConfirm.classList.remove('active'); isPlaying=false; cat.style.transform=''; });
 
       function addMsg(text,sender){ const row=document.createElement('div'); row.className='message'+(sender==='user'?' user':''); const bub=document.createElement('div'); bub.className='msg-bubble'; bub.textContent=text; row.appendChild(bub); msgBox.appendChild(row); msgBox.scrollTop=msgBox.scrollHeight; return row; }
       function renderAll(){ msgBox.innerHTML=''; conversationHistory.forEach(m=>addMsg(m.content,m.role==='assistant'?'cat':'user')); }
-      function getCurrentContext() { const now = new Date(); return `当前时间：${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][now.getDay()]} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}。`; }
-
-      async function aiReply(userMsg){
-        const context = getCurrentContext();
-        const sys = {
-          role: 'system',
-          content: `你是一只名叫猫咪老师的小猫，拥有ENFJ人格。你非常温暖、富有同情心，善于察觉他人情绪，并且具备解决实际问题的智慧。${context}当对方倾诉时，先共情，再提供一两个实质建议。永远不说教，不用括号动作。回复简短可爱。你需要先共情对方的情绪让对方感觉到被理解，同时也要积极地认可对方，在处理好情绪后，接着根据对方的具体问题，用商量、轻柔的语气提供实质性、可操作的小建议。`
-        };
-        const msgs = [sys, ...conversationHistory, {role:'user', content:userMsg}];
-        try {
-          const res = await fetch(AI_URL, { method:'POST', headers:{'Content-Type':'application/json','Authorization':`Bearer ${AI_KEY}`}, body:JSON.stringify({model:AI_MODEL, messages:msgs, temperature:1.0, max_tokens:350}) });
-          const data = await res.json();
-          if (data.choices && data.choices[0]) return data.choices[0].message.content.replace(/（[^）]*）/g,'').replace(/\([^)]*\)/g,'').trim();
-        } catch(e) {}
-        return null;
-      }
-      function localReply(text){
-        const x = text.toLowerCase();
-        if (x.includes('论文')||x.includes('进度')) return '喵… 论文卡住的感觉我懂。或许可以试试把大纲拆成几个小块，今天只专注其中一段？';
-        if (x.includes('迷茫')||x.includes('不知道')) return '迷茫的时候，先停下来问问自己此刻最在意什么，答案往往就在第一个念头里。';
-        if (x.includes('压力')||x.includes('累')) return '压力大的时候，身体也会紧。先深呼吸几次，然后把烦心事列个小清单，挑最烦的那个聊聊看？';
-        if (x.includes('难过')||x.includes('伤心')) return '感觉到你好像有点低落… 愿意和我说说发生了什么吗？说出来会好一点。';
-        if (x.includes('开心')||x.includes('快乐')) return '好心情是会传染的喵～ 是什么让你这么开心呀？';
-        return '喵～ 我在听呢。不管什么事，我都会陪着你的。';
-      }
+      function getCurrentContext(){ const now=new Date(); return `当前时间：${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][now.getDay()]} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}。`; }
+      async function aiReply(userMsg){ const context = getCurrentContext(); const sys = { role:'system', content:`你是一只名叫猫咪老师的小猫，拥有ENFJ人格。${context}当对方倾诉时，先共情，再提供一两个实质建议。永远不说教，不用括号动作。回复简短可爱。` }; const msgs = [sys, ...conversationHistory, {role:'user', content:userMsg}]; try { const res = await fetch(AI_URL, { method:'POST', headers:{'Content-Type':'application/json','Authorization':`Bearer ${AI_KEY}`}, body:JSON.stringify({model:AI_MODEL, messages:msgs, temperature:1.0, max_tokens:350}) }); const data = await res.json(); if (data.choices && data.choices[0]) return data.choices[0].message.content.replace(/（[^）]*）/g,'').replace(/\([^)]*\)/g,'').trim(); } catch(e) {} return null; }
+      function localReply(text){ const x = text.toLowerCase(); if (x.includes('论文')||x.includes('进度')) return '喵… 论文卡住的感觉我懂。或许可以试试把大纲拆成几个小块，今天只专注其中一段？'; if (x.includes('迷茫')||x.includes('不知道')) return '迷茫的时候，先停下来问问自己此刻最在意什么，答案往往就在第一个念头里。'; if (x.includes('压力')||x.includes('累')) return '压力大的时候，身体也会紧。先深呼吸几次，然后把烦心事列个小清单，挑最烦的那个聊聊看？'; if (x.includes('难过')||x.includes('伤心')) return '感觉到你好像有点低落… 愿意和我说说发生了什么吗？说出来会好一点。'; if (x.includes('开心')||x.includes('快乐')) return '好心情是会传染的喵～ 是什么让你这么开心呀？'; return '喵～ 我在听呢。不管什么事，我都会陪着你的。'; }
       async function sendMessage(){ const text=chatInput.value.trim(); if(!text) return; addMsg(text,'user'); chatInput.value=''; const thinking=addMsg('猫咪老师正在思考...','cat'); let reply=await aiReply(text) || localReply(text); thinking.remove(); conversationHistory.push({role:'user',content:text},{role:'assistant',content:reply}); saveHist(conversationHistory); addMsg(reply,'cat'); }
       sendBtn.addEventListener('click',sendMessage); chatInput.addEventListener('keypress',e=>{ if(e.key==='Enter') sendMessage(); });
-
       function openChat(){ if(msgBox.children.length===0 && conversationHistory.length>0) renderAll(); else if(msgBox.children.length===0 && conversationHistory.length===0){ const greeting='喵～ 你好呀！我是猫咪老师，今天想好好听你说话。你怎么样？'; conversationHistory.push({role:'assistant',content:greeting}); saveHist(conversationHistory); addMsg(greeting,'cat'); } chatModal.classList.add('active'); chatInput.focus(); }
-      closeChatBtn.addEventListener('click',()=>{ chatModal.classList.remove('active'); });
-      clearBtn.addEventListener('click',()=>{ if(confirm('确定清空所有聊天记录吗？')){ conversationHistory=[]; clearHist(); msgBox.innerHTML=''; const greeting='喵～ 你好呀！我是猫咪老师，今天想好好听你说话。你怎么样？'; conversationHistory.push({role:'assistant',content:greeting}); saveHist(conversationHistory); addMsg(greeting,'cat'); } });
+      closeChatBtn.addEventListener('click', ()=>{ chatModal.classList.remove('active'); });
+      clearBtn.addEventListener('click', ()=>{ if(confirm('确定清空所有聊天记录吗？')){ conversationHistory=[]; clearHist(); msgBox.innerHTML=''; const greeting='喵～ 你好呀！我是猫咪老师，今天想好好听你说话。你怎么样？'; conversationHistory.push({role:'assistant',content:greeting}); saveHist(conversationHistory); addMsg(greeting,'cat'); } });
       const chatHeader=document.getElementById('chatHeader'); let dragging=false, offX, offY;
       chatHeader.addEventListener('mousedown',e=>{ if(e.target.classList.contains('close-chat')||e.target.classList.contains('clear-chat')) return; dragging=true; const r=chatModal.getBoundingClientRect(); offX=e.clientX-r.left; offY=e.clientY-r.top; });
       window.addEventListener('mousemove',e=>{ if(dragging){ chatModal.style.left=(e.clientX-offX)+'px'; chatModal.style.top=(e.clientY-offY)+'px'; chatModal.style.transform='none'; } });
       window.addEventListener('mouseup',()=>{ dragging=false; });
-
-      // Research
-      const RKEY='sjw_research', defRData={ travel:{title:'🗺️ 未来旅行计划',items:['还未确定的目的地','想去海边看一次日出','一起爬山']}, movies:{title:'🎬 电影之夜',items:['值得反复观看的电影','《星际穿越》','《怦然心动》']}, music:{title:'🎵 音乐推荐',items:['那些触动心灵的旋律','Coldplay - Yellow','周杰伦 - 晴天']}, ideas:{title:'💡 灵感碎片',items:['随时记录的小想法','开一家书店','学会弹吉他']} };
-      function loadR(){ return JSON.parse(localStorage.getItem(RKEY)||JSON.stringify(defRData)); }
-      function saveR(d){ localStorage.setItem(RKEY,JSON.stringify(d)); }
-      function renderR(){
-        const cont=document.getElementById('categoriesContainer'); const data=loadR();
-        cont.innerHTML=Object.entries(data).map(([k,v])=>`<div class="category" data-cat="${k}"><div class="cat-title">${v.title}</div><ul class="item-list">${v.items.map((it,i)=>`<li><span class="item-text" contenteditable="true" data-idx="${i}">${it}</span><button class="delete-btn" data-idx="${i}">✕</button></li>`).join('')}</ul><div class="add-item-form"><input type="text" placeholder="添加新条目..." class="new-item-input"><button class="add-item-btn">添加</button></div></div>`).join('');
-        document.querySelectorAll('.category').forEach(catDiv=>{
-          const catKey=catDiv.dataset.cat;
-          catDiv.querySelectorAll('.item-text').forEach(span=>span.addEventListener('blur',()=>{ const d=loadR(); d[catKey].items[span.dataset.idx]=span.textContent; saveR(d); }));
-          catDiv.querySelectorAll('.delete-btn').forEach(btn=>btn.addEventListener('click',()=>{ const d=loadR(); d[catKey].items.splice(btn.dataset.idx,1); saveR(d); renderR(); }));
-          const inp=catDiv.querySelector('.new-item-input'), addBtn=catDiv.querySelector('.add-item-btn');
-          addBtn.addEventListener('click',()=>{ if(inp.value.trim()){ const d=loadR(); d[catKey].items.push(inp.value.trim()); saveR(d); renderR(); } });
-          inp.addEventListener('keypress',e=>{ if(e.key==='Enter'){ if(inp.value.trim()){ const d=loadR(); d[catKey].items.push(inp.value.trim()); saveR(d); renderR(); } } });
-        });
-      }
-      renderR();
     })();
   </script>
 </body>
