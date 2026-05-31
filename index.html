@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=0.375, maximum-scale=2.0, minimum-scale=0.375, user-scalable=yes, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=0.6, maximum-scale=2.0, minimum-scale=0.5, user-scalable=yes, viewport-fit=cover">
   <title>🦋 生日快乐 · 单婧雯</title>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Dancing+Script:wght@400;500;700&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -57,34 +57,35 @@
     .page { width: 100%; display: none; flex-direction: column; align-items: center; }
     .page.active { display: flex; }
 
-    /* 首页 */
-    .section { width: 100%; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; }
-    .cake-zone { position: relative; background: url('background.jpg') no-repeat center center; background-size: cover; }
-    .cake-zone::after {
-      content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 200px;
-      background: linear-gradient(to bottom, rgba(253,247,242,0) 0%, rgba(30,20,30,0.7) 100%);
-      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); pointer-events: none; z-index: 1;
+    /* 首页统一背景 */
+    #homePage {
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+    }
+    .home-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 100vh;
+      padding: 40px 20px;
     }
     .cake-card {
-      position: relative; z-index: 2; background: rgba(255,248,240,0.75); backdrop-filter: blur(12px);
+      background: rgba(255,248,240,0.75); backdrop-filter: blur(12px);
       border-radius: 36px; padding: 40px 30px; box-shadow: 0 20px 60px rgba(80,40,20,0.25);
       text-align: center; max-width: 500px; width: 90%; animation: floatIn 1.5s ease-out;
+      margin-bottom: 50px;
     }
     @keyframes floatIn { 0%{ opacity:0; transform:translateY(50px) scale(0.9); } 100%{ opacity:1; transform:translateY(0) scale(1); } }
     .cake-img { width: 200px; height: auto; filter: drop-shadow(0 12px 24px rgba(140,90,60,0.5)); margin-bottom: 10px; }
     .cake-text { font-family: 'Caveat','Dancing Script',cursive; font-size: 2.6rem; color: #543737; letter-spacing: 4px; margin: 8px 0; }
     .cake-sub { font-family: 'Caveat',cursive; font-size: 1.2rem; color: #8b6b5b; }
 
-    .fireworks-zone { position: relative; overflow: hidden; background: #0d0a10; }
-    .fireworks-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; pointer-events: none; }
-    .fireworks-zone::before {
-      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 200px;
-      background: linear-gradient(to bottom, rgba(30,20,30,0.7) 0%, transparent 100%);
-      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); pointer-events: none; z-index: 1;
-    }
     .cards-container {
-      position: relative; z-index: 2; display: flex; flex-wrap: wrap; gap: 30px; justify-content: center;
-      max-width: 900px; width: 100%; margin: 20px auto; padding: 40px 20px;
+      display: flex; flex-wrap: wrap; gap: 30px; justify-content: center;
+      max-width: 900px; width: 100%; margin: 0 auto; padding: 0 20px 40px;
     }
     .portal-card {
       background: rgba(255,250,245,0.75); backdrop-filter: blur(12px); border-radius: 28px;
@@ -135,7 +136,6 @@
     }
     .photo-card:hover .delete-photo { opacity: 1; }
 
-    /* 照片全屏预览 (复用) */
     .lightbox { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.92); z-index:1000; display:none; align-items:center; justify-content:center; flex-direction:column; }
     .lightbox.active { display:flex; }
     .lightbox-content { position: relative; max-width:90vw; max-height:75vh; display:flex; align-items:center; justify-content:center; margin-bottom:40px; }
@@ -215,20 +215,13 @@
     .letter-title { font-family: 'Caveat', cursive; font-size: 2rem; color: #543737; margin-bottom: 20px; text-align: center; }
     .letter-images { display: flex; flex-direction: column; align-items: center; gap: 20px; }
     .letter-images img {
-      max-width: 100%;
-      width: auto;
-      max-height: 400px;
-      border-radius: 18px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-      object-fit: contain;
-      background: rgba(255,255,255,0.6);
-      backdrop-filter: blur(4px);
-      cursor: pointer;
-      transition: transform 0.2s;
+      max-width: 100%; width: auto; max-height: 400px; border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12); object-fit: contain;
+      background: rgba(255,255,255,0.6); backdrop-filter: blur(4px);
+      cursor: pointer; transition: transform 0.2s;
     }
     .letter-images img:hover { transform: scale(1.02); }
 
-    /* 信全屏灯箱 (复用 lightbox 类但单独控制) */
     .letter-lightbox {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.95); z-index: 1000; display: none;
@@ -240,14 +233,8 @@
     .letter-lightbox .nav-arrow:hover { color: #fff; }
     .letter-lightbox .nav-arrow.left { left: 10px; }
     .letter-lightbox .nav-arrow.right { right: 10px; }
-    .letter-lightbox-content {
-      position: relative; max-width: 90vw; max-height: 80vh; display: flex;
-      align-items: center; justify-content: center; margin-bottom: 40px;
-    }
-    .letter-lightbox-content img {
-      max-width: 90vw; max-height: 80vh; object-fit: contain;
-      border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.5);
-    }
+    .letter-lightbox-content { position: relative; max-width: 90vw; max-height: 80vh; display: flex; align-items: center; justify-content: center; margin-bottom: 40px; }
+    .letter-lightbox-content img { max-width: 90vw; max-height: 80vh; object-fit: contain; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
 
     @media (max-width: 768px) {
       .cake-text { font-size: 2rem; }
@@ -261,14 +248,8 @@
   <div class="global-quiz-overlay" id="globalQuizOverlay">
     <div class="global-quiz-box">
       <h2>🔐 回答两个小问题</h2>
-      <div class="quiz-field">
-        <label>1. 你的名字是什么？</label>
-        <input type="text" id="quizName" placeholder="例：张三" maxlength="20">
-      </div>
-      <div class="quiz-field">
-        <label>2. 你的生日是什么时候？</label>
-        <input type="text" id="quizBirthday" placeholder="例：0507" maxlength="10">
-      </div>
+      <div class="quiz-field"><label>1. 你的名字是什么？</label><input type="text" id="quizName" placeholder="例：张三" maxlength="20"></div>
+      <div class="quiz-field"><label>2. 你的生日是什么时候？</label><input type="text" id="quizBirthday" placeholder="例：0507" maxlength="10"></div>
       <div class="global-quiz-error" id="globalQuizError"></div>
       <button id="globalQuizSubmit">进入</button>
     </div>
@@ -277,18 +258,14 @@
   <div id="mainContent" style="display: none; width: 100%;">
     <button class="back-btn" id="backToHomeBtn">← 返回首页</button>
 
+    <!-- 首页：统一背景，移除烟花视频 -->
     <div class="page active" id="homePage">
-      <div class="section cake-zone">
+      <div class="home-content">
         <div class="cake-card">
           <img src="蛋糕.jpg" alt="生日蛋糕" class="cake-img">
           <div class="cake-text">🎂 生日快乐！🎂</div>
           <div class="cake-sub">愿你的每一天都像今天一样被温柔相待</div>
         </div>
-      </div>
-      <div class="section fireworks-zone">
-        <video class="fireworks-video" autoplay muted loop playsinline>
-          <source src="fireworks.mp4" type="video/mp4">
-        </video>
         <div class="cards-container">
           <div class="portal-card" data-page="photography"><div class="portal-icon">📷</div><div class="portal-title">Photography</div></div>
           <div class="portal-card" data-page="happyBirthday"><div class="portal-icon">🎈</div><div class="portal-title">Happy Birthday</div></div>
@@ -297,6 +274,7 @@
       </div>
     </div>
 
+    <!-- Photography -->
     <div class="page photography-page" id="photographyPage">
       <div class="floating-orb" style="width: 280px; height: 280px; top: -60px; left: -80px; background: radial-gradient(circle, #ffdbef, #efcbff);"></div>
       <div class="floating-orb" style="width: 380px; height: 380px; bottom: -120px; right: -70px; background: radial-gradient(circle, #f7d5f0, #cfb5ff); animation-duration: 28s;"></div>
@@ -306,19 +284,13 @@
       <div class="petal" style="left: 85%; animation-duration: 28s; animation-delay: 1s;">🌙</div>
       <div class="petal" style="left: 92%; animation-duration: 21s; animation-delay: 4s;">✨</div>
       <div class="petal" style="left: 45%; animation-duration: 35s; animation-delay: 0.5s;">🍃</div>
-
       <h1 style="font-family:'Caveat',cursive; text-align:center; color:#4a3535; margin-bottom:30px; position:relative; z-index:1;">📷 Photography</h1>
       <div class="photo-grid" id="photoGrid"></div>
-
       <div class="add-section">
         <div class="add-title">＋ 添加新照片</div>
         <div class="form-group">
           <input type="text" id="imgUrl" placeholder="照片链接 (URL)">
-          <div class="upload-row">
-            <span style="color:#8b6b5b; font-size:0.9rem;">或</span>
-            <button class="upload-btn" id="uploadFromAlbum">📷 从相册上传</button>
-            <span class="file-name" id="fileNameDisplay"></span>
-          </div>
+          <div class="upload-row"><span style="color:#8b6b5b; font-size:0.9rem;">或</span><button class="upload-btn" id="uploadFromAlbum">📷 从相册上传</button><span class="file-name" id="fileNameDisplay"></span></div>
           <input type="file" id="fileInput" accept="image/*" style="display:none;">
           <textarea id="caption" rows="3" placeholder="照片附文……"></textarea>
           <input type="date" id="photoDate">
@@ -329,6 +301,7 @@
       <div class="admin-btn" id="adminBtn">⚙️ 管理</div>
     </div>
 
+    <!-- 照片全屏预览 -->
     <div class="lightbox" id="lightbox">
       <span class="close-lightbox" id="closeLightbox">&times;</span>
       <div class="lightbox-content"><img id="lightboxImg" src="" alt=""></div>
@@ -338,6 +311,7 @@
       <button class="nav-arrow right" id="nextBtn">&#10095;</button>
     </div>
 
+    <!-- Happy Birthday -->
     <div class="page hb-page" id="hbPage">
       <div class="big-wish">🎈 希望单婧雯天天开心！</div>
       <div class="weather-card" id="weatherBox"><div class="weather-icon">☁️</div><div class="weather-temp">--°C</div><div class="weather-desc">正在获取西安天气...</div></div>
@@ -347,7 +321,6 @@
         <div class="art-row row-two"><div class="art-card" style="--rotate:-1.6deg;"><img src="图片4.jpg" alt="插画4"></div><div class="art-card" style="--rotate:2.3deg;"><img src="图片5.jpg" alt="插画5"></div></div>
       </div>
       <div class="cat" id="cat"><img src="maomi.jpg" alt="猫咪老师"></div>
-
       <div class="password-overlay" id="passwordOverlay">
         <div class="password-title">🐱 请输入密码</div>
         <input type="password" class="password-input" id="passwordInput" placeholder="初始密码：0610" maxlength="20">
@@ -364,7 +337,6 @@
         <div class="chat-confirm-text">🐱 “你想和我说说话吗？”</div>
         <div class="confirm-btns"><button class="confirm-btn confirm-yes" id="confirmYes">想呀～</button><button class="confirm-btn confirm-no" id="confirmNo">先不了</button></div>
       </div>
-
       <div class="chat-modal" id="chatModal">
         <div class="chat-header" id="chatHeader"><div class="chat-header-left"><span>🐱 猫咪老师</span><button class="clear-chat" id="clearChatBtn">🗑️</button></div><button class="close-chat" id="closeChat">&times;</button></div>
         <div class="chat-messages" id="chatMessages"></div>
@@ -372,11 +344,10 @@
       </div>
     </div>
 
+    <!-- Research -->
     <div class="page research-page" id="researchPage">
       <h1 style="font-family:'Caveat',cursive; text-align:center; color:#4a3535; margin-bottom:30px;">🔭 探索中……</h1>
       <div id="categoriesContainer"></div>
-
-      <!-- 五页信，纵向排列，单击放大 -->
       <div class="letter-section">
         <div class="letter-title">✉️ xiexie</div>
         <div class="letter-images" id="letterImages">
@@ -392,9 +363,7 @@
     <!-- 信专用全屏灯箱 -->
     <div class="letter-lightbox" id="letterLightbox">
       <span class="close-lightbox" id="closeLetterLightbox">&times;</span>
-      <div class="letter-lightbox-content">
-        <img id="letterLightboxImg" src="" alt="">
-      </div>
+      <div class="letter-lightbox-content"><img id="letterLightboxImg" src="" alt=""></div>
       <button class="nav-arrow left" id="letterPrevBtn">&#10094;</button>
       <button class="nav-arrow right" id="letterNextBtn">&#10095;</button>
     </div>
@@ -410,53 +379,43 @@
       const quizSubmit = document.getElementById('globalQuizSubmit');
       const mainContent = document.getElementById('mainContent');
       const SESSION_KEY = 'global_unlocked';
-
       if (sessionStorage.getItem(SESSION_KEY) === 'true') {
-        quizOverlay.style.display = 'none';
-        mainContent.style.display = '';
+        quizOverlay.style.display = 'none'; mainContent.style.display = '';
       } else {
-        quizOverlay.style.display = 'flex';
-        mainContent.style.display = 'none';
+        quizOverlay.style.display = 'flex'; mainContent.style.display = 'none';
       }
-
       function attemptQuiz() {
-        const name = nameInput.value.trim();
-        const birthday = birthdayInput.value.trim();
-        if (name === '单婧雯' && birthday === '0610') {
+        if (nameInput.value.trim() === '单婧雯' && birthdayInput.value.trim() === '0610') {
           sessionStorage.setItem(SESSION_KEY, 'true');
-          quizOverlay.style.display = 'none';
-          mainContent.style.display = '';
+          quizOverlay.style.display = 'none'; mainContent.style.display = '';
         } else {
           quizError.textContent = '答案不正确，请重试';
         }
       }
-
       quizSubmit.addEventListener('click', attemptQuiz);
-      nameInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') attemptQuiz(); });
-      birthdayInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') attemptQuiz(); });
+      nameInput.addEventListener('keypress', e => { if (e.key==='Enter') attemptQuiz(); });
+      birthdayInput.addEventListener('keypress', e => { if (e.key==='Enter') attemptQuiz(); });
     })();
 
-    // 主功能
     (function() {
       const pages = { home: document.getElementById('homePage'), photography: document.getElementById('photographyPage'), happyBirthday: document.getElementById('hbPage'), research: document.getElementById('researchPage') };
       const backBtn = document.getElementById('backToHomeBtn');
       function showPage(id) {
         Object.values(pages).forEach(p => p.classList.remove('active'));
-        if (pages[id]) pages[id].classList.add('active');
+        pages[id].classList.add('active');
         backBtn.classList.toggle('show', id !== 'home');
-        if (id === 'happyBirthday') startCat();
-        else stopCat();
+        if (id === 'happyBirthday') startCat(); else stopCat();
       }
       backBtn.addEventListener('click', () => showPage('home'));
       document.querySelectorAll('.portal-card').forEach(c => c.addEventListener('click', () => showPage(c.dataset.page)));
 
       // Photography
       const DB_NAME='SJW_Photography', STORE='photos'; let db;
-      function openDB(){ return new Promise((res,rej)=>{ const r=indexedDB.open(DB_NAME,1); r.onupgradeneeded=e=>{ const d=e.target.result; if(!d.objectStoreNames.contains(STORE)) d.createObjectStore(STORE,{keyPath:'id',autoIncrement:true}); }; r.onsuccess=e=>{ db=e.target.result; res(db); }; r.onerror=e=>rej(e.target.error); }); }
+      function openDB(){ return new Promise((res,rej)=>{ const r=indexedDB.open(DB_NAME,1); r.onupgradeneeded=e=>{ if(!e.target.result.objectStoreNames.contains(STORE)) e.target.result.createObjectStore(STORE,{keyPath:'id',autoIncrement:true}); }; r.onsuccess=e=>{ db=e.target.result; res(db); }; r.onerror=e=>rej(e.target.error); }); }
       async function loadPhotos(){ if(!db) await openDB(); return new Promise((res,rej)=>{ const tx=db.transaction(STORE,'readonly'); const req=tx.objectStore(STORE).getAll(); req.onsuccess=()=>res(req.result); req.onerror=e=>rej(e.target.error); }); }
       async function savePhoto(p){ if(!db) await openDB(); return new Promise((res,rej)=>{ const tx=db.transaction(STORE,'readwrite'); const req=tx.objectStore(STORE).add(p); req.onsuccess=()=>res(req.result); req.onerror=e=>rej(e.target.error); }); }
-      async function delPhoto(id){ if(!db) await openDB(); return new Promise((res,rej)=>{ const tx=db.transaction(STORE,'readwrite'); const req=tx.objectStore(STORE).delete(id); req.onsuccess=()=>res(); req.onerror=e=>rej(e.target.error); }); }
-      async function clearAllPhotos(){ if(!db) await openDB(); return new Promise((res,rej)=>{ const tx=db.transaction(STORE,'readwrite'); const req=tx.objectStore(STORE).clear(); req.onsuccess=()=>res(); req.onerror=e=>rej(e.target.error); }); }
+      async function delPhoto(id){ if(!db) await openDB(); return new Promise((res,rej)=>{ const tx=db.transaction(STORE,'readwrite'); tx.objectStore(STORE).delete(id); req.onsuccess=()=>res(); req.onerror=e=>rej(e.target.error); }); }
+      async function clearAllPhotos(){ if(!db) await openDB(); return new Promise((res,rej)=>{ const tx=db.transaction(STORE,'readwrite'); tx.objectStore(STORE).clear(); req.onsuccess=()=>res(); req.onerror=e=>rej(e.target.error); }); }
       const defPhotos=[{url:'https://picsum.photos/seed/sjw4/600/400',caption:'山间的风，带着松树的清香。',date:'2026-05-10'}];
       let pendingBase64=null;
       function randomH(){ return Math.floor(Math.random()*61)+160; }
@@ -467,8 +426,7 @@
         else{ di.value=ts; di.setAttribute('readonly',true); dh.style.display='block'; }
       }
       async function renderPhotos(){
-        const grid=document.getElementById('photoGrid'); if(!grid) return;
-        let photos=await loadPhotos();
+        const grid=document.getElementById('photoGrid'); let photos=await loadPhotos();
         if(!photos.length){ for(const p of defPhotos) await savePhoto(p); photos=await loadPhotos(); }
         grid.innerHTML=photos.map(p=>`<div class="photo-card" data-id="${p.id}"><img src="${p.url}" style="height:${randomH()}px;" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22><rect fill=%22%23f5e8dc%22/><text x=%22150%22 y=%22100%22 fill=%22%23c8b0a0%22>🖼️</text></svg>'"><div class="photo-text"><div class="photo-caption">${p.caption||''}</div><div class="photo-date">${p.date||''}</div></div><button class="delete-photo" data-id="${p.id}">✕</button></div>`).join('');
         document.querySelectorAll('.photo-card').forEach(c=>c.addEventListener('click',e=>{ if(!e.target.classList.contains('delete-photo')) openLightbox(parseInt(c.dataset.id)); }));
@@ -483,7 +441,6 @@
       prevBtn.addEventListener('click',()=>navigate(-1)); nextBtn.addEventListener('click',()=>navigate(1));
       function navigate(d){ const i=curPhotos.findIndex(p=>p.id===curId); if(i===-1) return; const ni=i+d; if(ni>=0&&ni<curPhotos.length) showPhoto(ni); }
       document.addEventListener('keydown',e=>{ if(!lb.classList.contains('active')) return; if(e.key==='ArrowLeft') navigate(-1); else if(e.key==='ArrowRight') navigate(1); else if(e.key==='Escape') lb.classList.remove('active'); });
-
       function compressImg(file){ return new Promise((res,rej)=>{ const reader=new FileReader(); reader.onload=e=>{ const img=new Image(); img.onload=()=>{ let w=img.width, h=img.height; if(w>800||h>800){ if(w>h){ h*=800/w; w=800; } else { w*=800/h; h=800; } } const canvas=document.createElement('canvas'); canvas.width=w; canvas.height=h; const ctx=canvas.getContext('2d'); ctx.drawImage(img,0,0,w,h); res(canvas.toDataURL('image/jpeg',0.7)); }; img.onerror=rej; img.src=e.target.result; }; reader.onerror=rej; reader.readAsDataURL(file); }); }
       async function addPhoto(url,caption,date){ await savePhoto({url,caption,date}); renderPhotos(); document.getElementById('imgUrl').value=''; document.getElementById('caption').value=''; document.getElementById('fileNameDisplay').textContent=''; pendingBase64=null; updateDate(); }
       document.getElementById('addPhotoBtn').addEventListener('click',async()=>{
@@ -504,29 +461,20 @@
       });
       openDB().then(()=>renderPhotos()); updateDate();
 
-      // ========== 信的全屏浏览功能 ==========
+      // 信的全屏浏览
       const letterLightbox = document.getElementById('letterLightbox');
       const letterImg = document.getElementById('letterLightboxImg');
       const closeLetter = document.getElementById('closeLetterLightbox');
       const letterPrev = document.getElementById('letterPrevBtn');
       const letterNext = document.getElementById('letterNextBtn');
-      let letterPages = [];
-      let currentLetterIndex = 0;
-
+      let letterPages = [], currentLetterIndex = 0;
       function initLetterViewer() {
-        // 获取所有可见的信图片
         const allImgs = document.querySelectorAll('#letterImages .letter-page');
         letterPages = Array.from(allImgs).filter(img => img.style.display !== 'none');
-        // 为每张图片绑定点击事件
         letterPages.forEach((img, index) => {
-          img.addEventListener('click', () => {
-            currentLetterIndex = index;
-            showLetterPage(currentLetterIndex);
-            letterLightbox.classList.add('active');
-          });
+          img.addEventListener('click', () => { currentLetterIndex = index; showLetterPage(currentLetterIndex); letterLightbox.classList.add('active'); });
         });
       }
-
       function showLetterPage(index) {
         if (index < 0 || index >= letterPages.length) return;
         currentLetterIndex = index;
@@ -534,42 +482,27 @@
         letterPrev.style.display = currentLetterIndex > 0 ? 'block' : 'none';
         letterNext.style.display = currentLetterIndex < letterPages.length - 1 ? 'block' : 'none';
       }
-
-      function navigateLetter(direction) {
-        showLetterPage(currentLetterIndex + direction);
-      }
-
+      function navigateLetter(direction) { showLetterPage(currentLetterIndex + direction); }
       closeLetter.addEventListener('click', () => letterLightbox.classList.remove('active'));
       letterLightbox.addEventListener('click', (e) => { if (e.target === letterLightbox) letterLightbox.classList.remove('active'); });
       letterPrev.addEventListener('click', () => navigateLetter(-1));
       letterNext.addEventListener('click', () => navigateLetter(1));
-
       document.addEventListener('keydown', (e) => {
         if (!letterLightbox.classList.contains('active')) return;
         if (e.key === 'ArrowLeft') navigateLetter(-1);
         else if (e.key === 'ArrowRight') navigateLetter(1);
         else if (e.key === 'Escape') letterLightbox.classList.remove('active');
       });
-
-      // 触摸滑动支持
       let touchStartX = 0;
-      letterLightbox.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-      }, {passive: true});
+      letterLightbox.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
       letterLightbox.addEventListener('touchend', (e) => {
         if (!letterLightbox.classList.contains('active')) return;
         const diff = touchStartX - e.changedTouches[0].screenX;
-        if (Math.abs(diff) > 50) {
-          if (diff > 0) navigateLetter(1);
-          else navigateLetter(-1);
-        }
+        if (Math.abs(diff) > 50) { if (diff > 0) navigateLetter(1); else navigateLetter(-1); }
       });
-
-      // 初始化信查看器（在research页面渲染后调用）
-      // 但因为research的内容可能在页面加载时就已经存在，我们直接调用
       initLetterViewer();
 
-      // ========== Happy Birthday 猫咪老师 ==========
+      // Happy Birthday 猫咪老师
       const AI_URL='https://api.deepseek.com/v1/chat/completions', AI_KEY='sk-4c64c34cc08349e19f4ffe100a7f9987', AI_MODEL='deepseek-chat';
       const HIST_KEY='sjw_chat_hist', PWD_KEY='sjw_chat_pwd', INIT_PWD='0610';
       function loadHist(){ return JSON.parse(localStorage.getItem(HIST_KEY)||'[]'); }
@@ -581,7 +514,6 @@
       let catAnimFrame, catRunning=false;
       const cat=document.getElementById('cat'); if(cat){ cat.style.left='0px'; cat.style.top='0px'; }
       let catX=0,catY=0,targetX=0,targetY=0,isPlaying=false;
-
       function edgeTarget(){ const w=window.innerWidth-110, h=window.innerHeight-150; const e=Math.floor(Math.random()*4); if(e===0) return {x:Math.random()*w, y:40+Math.random()*60}; if(e===1) return {x:Math.random()*w, y:h-60-Math.random()*60}; if(e===2) return {x:40+Math.random()*60, y:Math.random()*h}; return {x:w-60-Math.random()*60, y:Math.random()*h}; }
       function newTarget(){ const t=edgeTarget(); targetX=Math.max(40,Math.min(window.innerWidth-150,t.x)); targetY=Math.max(40,Math.min(window.innerHeight-180,t.y)); }
       function catMove(){
@@ -628,30 +560,22 @@
 
       function addMsg(text,sender){ const row=document.createElement('div'); row.className='message'+(sender==='user'?' user':''); const bub=document.createElement('div'); bub.className='msg-bubble'; bub.textContent=text; row.appendChild(bub); msgBox.appendChild(row); msgBox.scrollTop=msgBox.scrollHeight; return row; }
       function renderAll(){ msgBox.innerHTML=''; conversationHistory.forEach(m=>addMsg(m.content,m.role==='assistant'?'cat':'user')); }
-
-      function getCurrentContext() {
-        const now = new Date();
-        return `当前时间：${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][now.getDay()]} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}。`;
-      }
+      function getCurrentContext() { const now = new Date(); return `当前时间：${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][now.getDay()]} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}。`; }
 
       async function aiReply(userMsg){
         const context = getCurrentContext();
         const sys = {
           role: 'system',
-          content: `你是一只名叫猫咪老师的小猫，拥有ENFJ人格。你非常温暖、富有同情心，善于察觉他人情绪，并且具备解决实际问题的智慧。你温暖、洞察、知识渊博但不卖弄。你的使命是陪伴一位INFP女生，感知她的情绪，用温柔而尊重边界的方式引导她自己找到答案和力量。说话时带“喵~”的语气，但不要幼稚。${context}当对方倾诉时，先共情，再提供一两个实质建议。永远不说教，不用括号动作。回复简短可爱。你需要用infp女生喜欢的方式来回复，先共情对方的情绪让对方感觉到被理解，同时也要积极地认可对方，在处理好情绪后，接着根据对方的具体问题，关心一下发生了什么，用商量、轻柔的语气提供一两个实质性、可操作的小建议。你要记住，你是知道对方是infp人格的，但是你不可以去提及infp，这样会显得你的答复很刻意，除非是对方明确提及了自己的mbti类型`
+          content: `你是一只名叫猫咪老师的小猫，拥有ENFJ人格。你非常温暖、富有同情心，善于察觉他人情绪，并且具备解决实际问题的智慧。${context}当对方倾诉时，先共情，再提供一两个实质建议。永远不说教，不用括号动作。回复简短可爱。你需要先共情对方的情绪让对方感觉到被理解，同时也要积极地认可对方，在处理好情绪后，接着根据对方的具体问题，用商量、轻柔的语气提供实质性、可操作的小建议。`
         };
         const msgs = [sys, ...conversationHistory, {role:'user', content:userMsg}];
         try {
-          const res = await fetch(AI_URL, {
-            method: 'POST', headers: {'Content-Type':'application/json', 'Authorization':`Bearer ${AI_KEY}`},
-            body: JSON.stringify({model: AI_MODEL, messages: msgs, temperature: 1.0, max_tokens: 350})
-          });
+          const res = await fetch(AI_URL, { method:'POST', headers:{'Content-Type':'application/json','Authorization':`Bearer ${AI_KEY}`}, body:JSON.stringify({model:AI_MODEL, messages:msgs, temperature:1.0, max_tokens:350}) });
           const data = await res.json();
           if (data.choices && data.choices[0]) return data.choices[0].message.content.replace(/（[^）]*）/g,'').replace(/\([^)]*\)/g,'').trim();
         } catch(e) {}
         return null;
       }
-
       function localReply(text){
         const x = text.toLowerCase();
         if (x.includes('论文')||x.includes('进度')) return '喵… 论文卡住的感觉我懂。或许可以试试把大纲拆成几个小块，今天只专注其中一段？';
@@ -661,7 +585,6 @@
         if (x.includes('开心')||x.includes('快乐')) return '好心情是会传染的喵～ 是什么让你这么开心呀？';
         return '喵～ 我在听呢。不管什么事，我都会陪着你的。';
       }
-
       async function sendMessage(){ const text=chatInput.value.trim(); if(!text) return; addMsg(text,'user'); chatInput.value=''; const thinking=addMsg('猫咪老师正在思考...','cat'); let reply=await aiReply(text) || localReply(text); thinking.remove(); conversationHistory.push({role:'user',content:text},{role:'assistant',content:reply}); saveHist(conversationHistory); addMsg(reply,'cat'); }
       sendBtn.addEventListener('click',sendMessage); chatInput.addEventListener('keypress',e=>{ if(e.key==='Enter') sendMessage(); });
 
@@ -678,8 +601,7 @@
       function loadR(){ return JSON.parse(localStorage.getItem(RKEY)||JSON.stringify(defRData)); }
       function saveR(d){ localStorage.setItem(RKEY,JSON.stringify(d)); }
       function renderR(){
-        const cont=document.getElementById('categoriesContainer'); if(!cont) return;
-        const data=loadR();
+        const cont=document.getElementById('categoriesContainer'); const data=loadR();
         cont.innerHTML=Object.entries(data).map(([k,v])=>`<div class="category" data-cat="${k}"><div class="cat-title">${v.title}</div><ul class="item-list">${v.items.map((it,i)=>`<li><span class="item-text" contenteditable="true" data-idx="${i}">${it}</span><button class="delete-btn" data-idx="${i}">✕</button></li>`).join('')}</ul><div class="add-item-form"><input type="text" placeholder="添加新条目..." class="new-item-input"><button class="add-item-btn">添加</button></div></div>`).join('');
         document.querySelectorAll('.category').forEach(catDiv=>{
           const catKey=catDiv.dataset.cat;
@@ -691,8 +613,6 @@
         });
       }
       renderR();
-      // 确保信查看器在 research 渲染后能重新绑定（如果动态生成需要，但这里信是静态的，所以直接初始化没问题）
-      // 如果 renderR 被调用后信的HTML可能被改变？不会，信的HTML在categoriesContainer外面，所以initLetterViewer在页面加载时执行一次即可。
     })();
   </script>
 </body>
