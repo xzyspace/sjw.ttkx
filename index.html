@@ -7,7 +7,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Dancing+Script:wght@400;500;700&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* 样式完全不变，此处省略，与你原来的相同 */
     * { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior: smooth; }
     body {
@@ -63,13 +62,8 @@
       min-height: 100vh;
     }
     .home-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      min-height: 100vh;
-      padding: 40px 20px;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; width: 100%; min-height: 100vh; padding: 40px 20px;
     }
     .cake-card {
       background: rgba(255,248,240,0.75); backdrop-filter: blur(12px);
@@ -124,13 +118,7 @@
     .photo-card:nth-child(3n) { --rotate: 2.2deg; }
     .photo-card:nth-child(5n+2) { --rotate: -2.5deg; }
     .photo-card:hover { transform: rotate(0deg) translateY(-5px); box-shadow: 0 16px 36px rgba(0,0,0,0.1); z-index: 2; }
-    .photo-card img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 8px;
-    }
+    .photo-card img { width: 100%; height: auto; object-fit: cover; border-radius: 12px; margin-bottom: 8px; }
     .photo-text { padding: 8px 4px; font-size: 0.9rem; color: #6b5b5b; font-style: italic; line-height: 1.5; flex: 1; }
     .photo-date { font-size: 0.7rem; color: #b0a0a0; margin-top: 4px; }
     .delete-photo {
@@ -230,18 +218,15 @@
     .letter-title { font-family: 'Caveat', cursive; font-size: 2rem; color: #543737; margin-bottom: 20px; text-align: center; }
     .letter-images { display: flex; flex-direction: column; align-items: center; gap: 20px; }
     .letter-images img {
-      max-width: 100%;
-      width: auto;
-      max-height: 480px;
-      border-radius: 18px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-      object-fit: contain;
-      background: rgba(255,255,255,0.6);
-      backdrop-filter: blur(4px);
-      cursor: pointer;
-      transition: transform 0.2s;
+      max-width: 100%; width: auto; max-height: 400px; border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12); object-fit: contain;
+      background: rgba(255,255,255,0.6); backdrop-filter: blur(4px);
+      cursor: pointer; transition: transform 0.2s;
+      transform: scale(1.2);
+      transform-origin: center;
+      margin: 10px 0;
     }
-    .letter-images img:hover { transform: scale(1.02); }
+    .letter-images img:hover { transform: scale(1.2); }
 
     .letter-lightbox {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -338,10 +323,13 @@
         <div class="art-row row-two"><div class="art-card" style="--rotate:-1.6deg;"><img src="图片4.jpg" alt="插画4"></div><div class="art-card" style="--rotate:2.3deg;"><img src="图片5.jpg" alt="插画5"></div></div>
       </div>
       <div class="cat" id="cat"><img src="maomi.jpg" alt="猫咪老师"></div>
+
+      <!-- 移除密码相关 HTML -->
       <div class="chat-confirm" id="chatConfirm">
         <div class="chat-confirm-text">🐱 “你想和我说说话吗？”</div>
         <div class="confirm-btns"><button class="confirm-btn confirm-yes" id="confirmYes">想呀～</button><button class="confirm-btn confirm-no" id="confirmNo">先不了</button></div>
       </div>
+
       <div class="chat-modal" id="chatModal">
         <div class="chat-header" id="chatHeader"><div class="chat-header-left"><span>🐱 猫咪老师</span><button class="clear-chat" id="clearChatBtn">🗑️</button></div><button class="close-chat" id="closeChat">&times;</button></div>
         <div class="chat-messages" id="chatMessages"></div>
@@ -372,22 +360,19 @@
     </div>
   </div>
 
-  <!-- 引入 Firebase SDK（兼容版，无需 npm） -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-
   <script>
-    // ========== 🔥 使用你自己的配置（已去掉 measurementId，因为我们不用 Analytics） ==========
+    // Firebase 配置
     const firebaseConfig = {
-      apiKey: "AIzaSyAHeZKFW-_pnmOyN42LJ_64UZp8N7ohz4E",
-      authDomain: "sjwttkx.firebaseapp.com",
-      projectId: "sjwttkx",
-      storageBucket: "sjwttkx.firebasestorage.app",
-      messagingSenderId: "543412387169",
-      appId: "1:543412387169:web:2e249191b03293b8a65920"
+      apiKey: "AIzaSyDpPEnPlo0GgT5oxRVkcHi1B8mov-jYA18",
+      authDomain: "birthday-74e52.firebaseapp.com",
+      projectId: "birthday-74e52",
+      storageBucket: "birthday-74e52.firebasestorage.app",
+      messagingSenderId: "675790278322",
+      appId: "1:675790278322:web:1f51561838c31e5a68c3ab"
     };
 
-    // 初始化 Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     db.enablePersistence().catch(() => {});
@@ -431,18 +416,56 @@
       backBtn.addEventListener('click', () => showPage('home'));
       document.querySelectorAll('.portal-card').forEach(c => c.addEventListener('click', () => showPage(c.dataset.page)));
 
-      // 照片同步
-      const defPhotos = [{url:'https://picsum.photos/seed/sjw4/600/400', caption:'山间的风，带着松树的清香。', date:'2026-05-10'}];
-      let pendingBase64 = null;
+      // ========== 照片同步 ==========
+      const PHOTOS_COL = "photos";
+      const defPhotos = []; // 无默认照片
+
+      function loadPhotosRealtime(callback) {
+        db.collection(PHOTOS_COL).orderBy("timestamp", "asc").onSnapshot(snapshot => {
+          const photos = [];
+          snapshot.forEach(doc => photos.push({ id: doc.id, ...doc.data() }));
+          callback(photos);
+        });
+      }
+
+      async function savePhoto(photo) {
+        await db.collection(PHOTOS_COL).add({
+          url: photo.url,
+          caption: photo.caption,
+          date: photo.date,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      }
+
+      async function deletePhoto(id) {
+        await db.collection(PHOTOS_COL).doc(id).delete();
+      }
+
+      async function clearAllPhotos() {
+        const snapshot = await db.collection(PHOTOS_COL).get();
+        const batch = db.batch();
+        snapshot.forEach(doc => batch.delete(doc.ref));
+        await batch.commit();
+      }
+
       let currentPhotos = [];
+      let currentPhotoId = null;
+
+      function randomH() { return Math.floor(Math.random() * 61) + 160; }
+      function isBeforeCutoff() { const t=new Date(), c=new Date('2026-06-05'); return t<c; }
+      function updateDate() {
+        const di=document.getElementById('photoDate'), dh=document.getElementById('dateLockedHint'), ts=new Date().toISOString().split('T')[0];
+        if(isBeforeCutoff()){ di.removeAttribute('readonly'); di.value=ts; dh.style.display='none'; }
+        else{ di.value=ts; di.setAttribute('readonly',true); dh.style.display='block'; }
+      }
 
       function renderPhotos(photos) {
-        currentPhotos = photos;
         const grid = document.getElementById('photoGrid');
         if (!grid) return;
+        currentPhotos = photos;
         grid.innerHTML = photos.map(p => `
           <div class="photo-card" data-id="${p.id}">
-            <img src="${p.url}" alt="照片" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22><rect fill=%22%23f5e8dc%22/><text x=%22150%22 y=%22100%22 fill=%22%23c8b0a0%22>🖼️</text></svg>'">
+            <img src="${p.url}" style="height:${randomH()}px;" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22><rect fill=%22%23f5e8dc%22/><text x=%22150%22 y=%22100%22 fill=%22%23c8b0a0%22>🖼️</text></svg>'">
             <div class="photo-text">
               <div class="photo-caption">${p.caption || ''}</div>
               <div class="photo-date">${p.date || ''}</div>
@@ -460,130 +483,135 @@
         document.querySelectorAll('.delete-photo').forEach(btn => {
           btn.addEventListener('click', async (e) => {
             e.stopPropagation();
-            await db.collection('photos').doc(btn.dataset.id).delete();
+            await deletePhoto(btn.dataset.id);
           });
         });
       }
 
-      let initialLoadDone = false;
-      db.collection('photos').orderBy('timestamp', 'asc').onSnapshot((snapshot) => {
-        const photos = [];
-        snapshot.forEach(doc => photos.push({ id: doc.id, ...doc.data() }));
-        if (!initialLoadDone && photos.length === 0) {
-          defPhotos.forEach(p => db.collection('photos').add({...p, timestamp: firebase.firestore.FieldValue.serverTimestamp()}));
-          initialLoadDone = true;
-        } else {
-          renderPhotos(photos);
-        }
+      loadPhotosRealtime(photos => {
+        renderPhotos(photos);
       });
 
-      function isBeforeCutoff() { const t=new Date(), c=new Date('2026-06-05'); return t<c; }
-      function updateDate() {
-        const di=document.getElementById('photoDate'), dh=document.getElementById('dateLockedHint'), ts=new Date().toISOString().split('T')[0];
-        if(isBeforeCutoff()){ di.removeAttribute('readonly'); di.value=ts; dh.style.display='none'; }
-        else{ di.value=ts; di.setAttribute('readonly',true); dh.style.display='block'; }
-      }
-      updateDate();
-
-      const lb=document.getElementById('lightbox'), lbImg=document.getElementById('lightboxImg'), lbCap=document.getElementById('lightboxCaption'), lbDate=document.getElementById('lightboxDate');
       function openLightbox(id) {
-        const idx = currentPhotos.findIndex(p => p.id === id);
-        if (idx === -1) return;
-        showPhoto(idx);
-        lb.classList.add('active');
+        const index = currentPhotos.findIndex(p => p.id === id);
+        if (index === -1) return;
+        currentPhotoId = id;
+        showPhoto(index);
+        document.getElementById('lightbox').classList.add('active');
       }
+
       function showPhoto(i) {
         const p = currentPhotos[i];
-        lbImg.src = p.url;
-        lbCap.textContent = p.caption || '';
-        lbDate.textContent = p.date || '';
+        currentPhotoId = p.id;
+        document.getElementById('lightboxImg').src = p.url;
+        document.getElementById('lightboxCaption').textContent = p.caption || '';
+        document.getElementById('lightboxDate').textContent = p.date || '';
         document.getElementById('prevBtn').style.display = i > 0 ? 'block' : 'none';
         document.getElementById('nextBtn').style.display = i < currentPhotos.length - 1 ? 'block' : 'none';
       }
-      document.getElementById('closeLightbox').addEventListener('click', ()=>lb.classList.remove('active'));
-      lb.addEventListener('click', e=>{ if(e.target===lb) lb.classList.remove('active'); });
-      document.getElementById('prevBtn').addEventListener('click', ()=>{ const i = currentPhotos.findIndex(p=>p.id===lbImg.dataset.id); if(i>0) showPhoto(i-1); });
-      document.getElementById('nextBtn').addEventListener('click', ()=>{ const i = currentPhotos.findIndex(p=>p.id===lbImg.dataset.id); if(i<currentPhotos.length-1) showPhoto(i+1); });
-      document.addEventListener('keydown', e=>{
-        if(!lb.classList.contains('active')) return;
-        if(e.key==='ArrowLeft') { const i = currentPhotos.findIndex(p=>p.id===lbImg.dataset.id); if(i>0) showPhoto(i-1); }
-        else if(e.key==='ArrowRight') { const i = currentPhotos.findIndex(p=>p.id===lbImg.dataset.id); if(i<currentPhotos.length-1) showPhoto(i+1); }
-        else if(e.key==='Escape') lb.classList.remove('active');
+
+      function navigate(dir) {
+        const i = currentPhotos.findIndex(p => p.id === currentPhotoId);
+        if (i === -1) return;
+        const newIdx = i + dir;
+        if (newIdx >= 0 && newIdx < currentPhotos.length) showPhoto(newIdx);
+      }
+
+      document.getElementById('closeLightbox').addEventListener('click', () => document.getElementById('lightbox').classList.remove('active'));
+      document.getElementById('lightbox').addEventListener('click', e => { if (e.target === document.getElementById('lightbox')) document.getElementById('lightbox').classList.remove('active'); });
+      document.getElementById('prevBtn').addEventListener('click', () => navigate(-1));
+      document.getElementById('nextBtn').addEventListener('click', () => navigate(1));
+      document.addEventListener('keydown', e => {
+        if (!document.getElementById('lightbox').classList.contains('active')) return;
+        if (e.key === 'ArrowLeft') navigate(-1);
+        else if (e.key === 'ArrowRight') navigate(1);
+        else if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('active');
       });
 
       function compressImg(file) {
-        return new Promise((res,rej)=>{
-          const reader=new FileReader();
-          reader.onload=e=>{
-            const img=new Image();
-            img.onload=()=>{
-              let w=img.width, h=img.height;
-              if(w>800||h>800){ if(w>h){ h*=800/w; w=800; } else { w*=800/h; h=800; } }
-              const canvas=document.createElement('canvas'); canvas.width=w; canvas.height=h;
-              const ctx=canvas.getContext('2d'); ctx.drawImage(img,0,0,w,h);
-              res(canvas.toDataURL('image/jpeg',0.7));
+        return new Promise((res, rej) => {
+          const reader = new FileReader();
+          reader.onload = e => {
+            const img = new Image();
+            img.onload = () => {
+              let w = img.width, h = img.height;
+              if (w > 800 || h > 800) {
+                if (w > h) { h *= 800 / w; w = 800; }
+                else { w *= 800 / h; h = 800; }
+              }
+              const canvas = document.createElement('canvas');
+              canvas.width = w; canvas.height = h;
+              const ctx = canvas.getContext('2d');
+              ctx.drawImage(img, 0, 0, w, h);
+              res(canvas.toDataURL('image/jpeg', 0.7));
             };
-            img.onerror=rej; img.src=e.target.result;
+            img.onerror = rej;
+            img.src = e.target.result;
           };
-          reader.onerror=rej; reader.readAsDataURL(file);
+          reader.onerror = rej;
+          reader.readAsDataURL(file);
         });
       }
 
-      document.getElementById('addPhotoBtn').addEventListener('click', async ()=>{
-        const url = document.getElementById('imgUrl').value.trim();
-        const cap = document.getElementById('caption').value.trim();
-        const date = isBeforeCutoff() ? document.getElementById('photoDate').value : new Date().toISOString().split('T')[0];
-        if (pendingBase64) {
-          await db.collection('photos').add({url: pendingBase64, caption: cap, date, timestamp: firebase.firestore.FieldValue.serverTimestamp()});
-          pendingBase64 = null;
-        } else if (url) {
-          await db.collection('photos').add({url, caption: cap, date, timestamp: firebase.firestore.FieldValue.serverTimestamp()});
-        } else alert('请填写照片链接或从相册上传');
-        document.getElementById('imgUrl').value=''; document.getElementById('caption').value=''; document.getElementById('fileNameDisplay').textContent='';
+      let pendingBase64 = null;
+      async function addPhoto(url, caption, date) {
+        await savePhoto({ url, caption, date });
+        document.getElementById('imgUrl').value = '';
+        document.getElementById('caption').value = '';
+        document.getElementById('fileNameDisplay').textContent = '';
+        pendingBase64 = null;
         updateDate();
+      }
+
+      document.getElementById('addPhotoBtn').addEventListener('click', async () => {
+        const url = document.getElementById('imgUrl').value.trim();
+        const caption = document.getElementById('caption').value.trim();
+        const date = isBeforeCutoff() ? document.getElementById('photoDate').value : new Date().toISOString().split('T')[0];
+        if (pendingBase64) await addPhoto(pendingBase64, caption, date);
+        else if (url) await addPhoto(url, caption, date);
+        else alert('请填写照片链接或从相册上传');
       });
 
-      document.getElementById('uploadFromAlbum').addEventListener('click', ()=>document.getElementById('fileInput').click());
-      document.getElementById('fileInput').addEventListener('change', async e=>{
-        const file = e.target.files[0]; if(!file) return;
+      document.getElementById('uploadFromAlbum').addEventListener('click', () => document.getElementById('fileInput').click());
+      document.getElementById('fileInput').addEventListener('change', async e => {
+        const file = e.target.files[0];
+        if (!file) return;
         document.getElementById('fileNameDisplay').textContent = '正在压缩...';
         try {
           pendingBase64 = await compressImg(file);
           document.getElementById('fileNameDisplay').textContent = file.name + ' (已压缩)';
-          document.getElementById('imgUrl').placeholder = '已从相册选择：'+file.name;
+          document.getElementById('imgUrl').placeholder = '已从相册选择：' + file.name;
         } catch { alert('图片处理失败'); }
         e.target.value = '';
       });
 
-      document.getElementById('adminBtn').addEventListener('click', ()=>{
-        const act = prompt('管理面板：\nreset - 重置默认照片\nclear - 清空所有照片\nexport - 导出备份（下载 JSON）\nimport - 导入备份（追加，从 JSON）');
-        if (act === 'reset') {
-          (async ()=>{
-            const snapshot = await db.collection('photos').get();
-            snapshot.forEach(doc => doc.ref.delete());
-            for (const p of defPhotos) await db.collection('photos').add({...p, timestamp: firebase.firestore.FieldValue.serverTimestamp()});
-          })();
-        } else if (act === 'clear') {
-          if (confirm('确定清空所有照片？')) {
-            (async ()=>{ const snapshot = await db.collection('photos').get(); snapshot.forEach(doc => doc.ref.delete()); })();
-          }
+      document.getElementById('adminBtn').addEventListener('click', () => {
+        const act = prompt('管理面板：\nclear - 清空所有照片\nexport - 导出备份\nimport - 导入备份（追加）');
+        if (act === 'clear') {
+          if (confirm('确定清空所有照片？')) { (async () => { await clearAllPhotos(); })(); }
         } else if (act === 'export') {
-          (async ()=>{
-            const snapshot = await db.collection('photos').orderBy('timestamp','asc').get();
-            const data = []; snapshot.forEach(doc => data.push(doc.data()));
-            const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
-            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'photos_backup.json'; a.click();
+          (async () => {
+            const snapshot = await db.collection(PHOTOS_COL).orderBy("timestamp").get();
+            const photos = [];
+            snapshot.forEach(doc => photos.push(doc.data()));
+            const data = JSON.stringify(photos, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'photos_backup.json';
+            a.click();
           })();
         } else if (act === 'import') {
-          const inp = document.createElement('input'); inp.type='file'; inp.accept='.json';
+          const inp = document.createElement('input');
+          inp.type = 'file'; inp.accept = '.json';
           inp.onchange = e => {
             const fr = new FileReader();
             fr.onload = async ev => {
               try {
                 const imported = JSON.parse(ev.target.result);
                 if (Array.isArray(imported)) {
-                  for (const p of imported) await db.collection('photos').add({...p, timestamp: firebase.firestore.FieldValue.serverTimestamp()});
-                  alert('导入成功！照片已追加并同步。');
+                  for (const p of imported) await savePhoto(p);
+                  alert('导入成功！');
                 } else alert('文件格式不正确');
               } catch { alert('解析失败'); }
             };
@@ -593,82 +621,131 @@
         }
       });
 
-      // 信全屏
+      updateDate();
+
+      // ========== 研究计划同步 ==========
+      const RESEARCH_DOC = "research/data";
+      const defResearch = {
+        travel: { title: '🗺️ 未来旅行计划', items: [] },
+        movies: { title: '🎬 电影之夜', items: [] },
+        music: { title: '🎵 音乐推荐', items: [] },
+        ideas: { title: '💡 灵感碎片', items: [] }
+      };
+
+      function loadResearchRealtime(callback) {
+        db.collection("research").doc("data").onSnapshot(doc => {
+          if (doc.exists) {
+            callback(doc.data());
+          } else {
+            db.collection("research").doc("data").set(defResearch);
+            callback(defResearch);
+          }
+        });
+      }
+
+      function saveResearch(data) {
+        db.collection("research").doc("data").set(data);
+      }
+
+      let currentResearchData = null;
+      function renderResearch(data) {
+        const cont = document.getElementById('categoriesContainer');
+        if (!cont) return;
+        currentResearchData = data;
+        cont.innerHTML = Object.entries(data).map(([k, v]) => `
+          <div class="category" data-cat="${k}">
+            <div class="cat-title">${v.title}</div>
+            <ul class="item-list">${v.items.map((it, i) => `
+              <li><span class="item-text" contenteditable="true" data-idx="${i}">${it}</span><button class="delete-btn" data-idx="${i}">✕</button></li>
+            `).join('')}</ul>
+            <div class="add-item-form">
+              <input type="text" placeholder="添加新条目..." class="new-item-input">
+              <button class="add-item-btn">添加</button>
+            </div>
+          </div>
+        `).join('');
+
+        document.querySelectorAll('.category').forEach(catDiv => {
+          const catKey = catDiv.dataset.cat;
+          catDiv.querySelectorAll('.item-text').forEach(span => span.addEventListener('blur', () => {
+            const newData = JSON.parse(JSON.stringify(currentResearchData));
+            newData[catKey].items[span.dataset.idx] = span.textContent;
+            saveResearch(newData);
+          }));
+          catDiv.querySelectorAll('.delete-btn').forEach(btn => btn.addEventListener('click', () => {
+            const newData = JSON.parse(JSON.stringify(currentResearchData));
+            newData[catKey].items.splice(btn.dataset.idx, 1);
+            saveResearch(newData);
+          }));
+          const inp = catDiv.querySelector('.new-item-input');
+          const addBtn = catDiv.querySelector('.add-item-btn');
+          addBtn.addEventListener('click', () => {
+            if (inp.value.trim()) {
+              const newData = JSON.parse(JSON.stringify(currentResearchData));
+              newData[catKey].items.push(inp.value.trim());
+              saveResearch(newData);
+            }
+          });
+          inp.addEventListener('keypress', e => {
+            if (e.key === 'Enter' && inp.value.trim()) {
+              const newData = JSON.parse(JSON.stringify(currentResearchData));
+              newData[catKey].items.push(inp.value.trim());
+              saveResearch(newData);
+            }
+          });
+        });
+      }
+
+      loadResearchRealtime(data => {
+        renderResearch(data);
+      });
+
+      // ========== 信全屏浏览 ==========
       const letterLightbox = document.getElementById('letterLightbox');
       const letterImg = document.getElementById('letterLightboxImg');
       const closeLetter = document.getElementById('closeLetterLightbox');
       const letterPrev = document.getElementById('letterPrevBtn');
       const letterNext = document.getElementById('letterNextBtn');
       let letterPages = [], currentLetterIndex = 0;
+
       function initLetterViewer() {
         const allImgs = document.querySelectorAll('#letterImages .letter-page');
         letterPages = Array.from(allImgs).filter(img => img.style.display !== 'none');
-        letterPages.forEach((img, idx) => {
-          img.addEventListener('click', () => { currentLetterIndex = idx; showLetterPage(currentLetterIndex); letterLightbox.classList.add('active'); });
+        letterPages.forEach((img, index) => {
+          img.addEventListener('click', () => { currentLetterIndex = index; showLetterPage(index); letterLightbox.classList.add('active'); });
         });
       }
+
       function showLetterPage(index) {
         if (index < 0 || index >= letterPages.length) return;
         currentLetterIndex = index;
-        letterImg.src = letterPages[currentLetterIndex].src;
-        letterPrev.style.display = currentLetterIndex > 0 ? 'block' : 'none';
-        letterNext.style.display = currentLetterIndex < letterPages.length - 1 ? 'block' : 'none';
+        letterImg.src = letterPages[index].src;
+        letterPrev.style.display = index > 0 ? 'block' : 'none';
+        letterNext.style.display = index < letterPages.length - 1 ? 'block' : 'none';
       }
-      closeLetter.addEventListener('click', ()=>letterLightbox.classList.remove('active'));
-      letterLightbox.addEventListener('click', e=>{ if(e.target===letterLightbox) letterLightbox.classList.remove('active'); });
-      letterPrev.addEventListener('click', ()=>showLetterPage(currentLetterIndex-1));
-      letterNext.addEventListener('click', ()=>showLetterPage(currentLetterIndex+1));
-      document.addEventListener('keydown', e=>{
-        if(!letterLightbox.classList.contains('active')) return;
-        if(e.key==='ArrowLeft') showLetterPage(currentLetterIndex-1);
-        else if(e.key==='ArrowRight') showLetterPage(currentLetterIndex+1);
-        else if(e.key==='Escape') letterLightbox.classList.remove('active');
+
+      function navigateLetter(dir) { showLetterPage(currentLetterIndex + dir); }
+
+      closeLetter.addEventListener('click', () => letterLightbox.classList.remove('active'));
+      letterLightbox.addEventListener('click', e => { if (e.target === letterLightbox) letterLightbox.classList.remove('active'); });
+      letterPrev.addEventListener('click', () => navigateLetter(-1));
+      letterNext.addEventListener('click', () => navigateLetter(1));
+      document.addEventListener('keydown', e => {
+        if (!letterLightbox.classList.contains('active')) return;
+        if (e.key === 'ArrowLeft') navigateLetter(-1);
+        else if (e.key === 'ArrowRight') navigateLetter(1);
+        else if (e.key === 'Escape') letterLightbox.classList.remove('active');
       });
       let touchStartX = 0;
-      letterLightbox.addEventListener('touchstart', e=>{ touchStartX = e.changedTouches[0].screenX; }, {passive:true});
-      letterLightbox.addEventListener('touchend', e=>{
-        if(!letterLightbox.classList.contains('active')) return;
+      letterLightbox.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
+      letterLightbox.addEventListener('touchend', e => {
+        if (!letterLightbox.classList.contains('active')) return;
         const diff = touchStartX - e.changedTouches[0].screenX;
-        if(Math.abs(diff)>50){ if(diff>0) showLetterPage(currentLetterIndex+1); else showLetterPage(currentLetterIndex-1); }
+        if (Math.abs(diff) > 50) { if (diff > 0) navigateLetter(1); else navigateLetter(-1); }
       });
       initLetterViewer();
 
-      // 研究计划同步
-      const defResearch = {
-        travel: {title:'🗺️ 未来旅行计划',items:['还未确定的目的地','想去海边看一次日出','一起爬山']},
-        movies: {title:'🎬 电影之夜',items:['值得反复观看的电影','《星际穿越》','《怦然心动》']},
-        music: {title:'🎵 音乐推荐',items:['那些触动心灵的旋律','Coldplay - Yellow','周杰伦 - 晴天']},
-        ideas: {title:'💡 灵感碎片',items:['随时记录的小想法','开一家书店','学会弹吉他']}
-      };
-      let currentResearchData = null;
-      function renderResearch(data) {
-        const cont = document.getElementById('categoriesContainer');
-        if (!cont) return;
-        cont.innerHTML = Object.entries(data).map(([k,v])=>`
-          <div class="category" data-cat="${k}"><div class="cat-title">${v.title}</div><ul class="item-list">${v.items.map((it,i)=>`<li><span class="item-text" contenteditable="true" data-idx="${i}">${it}</span><button class="delete-btn" data-idx="${i}">✕</button></li>`).join('')}</ul><div class="add-item-form"><input type="text" placeholder="添加新条目..." class="new-item-input"><button class="add-item-btn">添加</button></div></div>`).join('');
-        document.querySelectorAll('.category').forEach(catDiv=>{
-          const catKey = catDiv.dataset.cat;
-          catDiv.querySelectorAll('.item-text').forEach(span=>span.addEventListener('blur', ()=>{
-            const newData = JSON.parse(JSON.stringify(currentResearchData));
-            newData[catKey].items[span.dataset.idx] = span.textContent;
-            db.collection('research').doc('data').set(newData);
-          }));
-          catDiv.querySelectorAll('.delete-btn').forEach(btn=>btn.addEventListener('click', ()=>{
-            const newData = JSON.parse(JSON.stringify(currentResearchData));
-            newData[catKey].items.splice(btn.dataset.idx, 1);
-            db.collection('research').doc('data').set(newData);
-          }));
-          const inp = catDiv.querySelector('.new-item-input'), addBtn = catDiv.querySelector('.add-item-btn');
-          addBtn.addEventListener('click', ()=>{ if(inp.value.trim()){ const newData = JSON.parse(JSON.stringify(currentResearchData)); newData[catKey].items.push(inp.value.trim()); db.collection('research').doc('data').set(newData); } });
-          inp.addEventListener('keypress', e=>{ if(e.key==='Enter' && inp.value.trim()){ const newData = JSON.parse(JSON.stringify(currentResearchData)); newData[catKey].items.push(inp.value.trim()); db.collection('research').doc('data').set(newData); } });
-        });
-      }
-      db.collection('research').doc('data').onSnapshot(doc=>{
-        if (doc.exists) { currentResearchData = doc.data(); renderResearch(currentResearchData); }
-        else { db.collection('research').doc('data').set(defResearch); currentResearchData = defResearch; renderResearch(defResearch); }
-      });
-
-      // 猫咪老师
+      // ========== 猫咪老师（无密码） ==========
       const AI_URL='https://api.deepseek.com/v1/chat/completions', AI_KEY='sk-4c64c34cc08349e19f4ffe100a7f9987', AI_MODEL='deepseek-chat';
       const HIST_KEY='sjw_chat_hist';
       function loadHist(){ return JSON.parse(localStorage.getItem(HIST_KEY)||'[]'); }
@@ -678,10 +755,14 @@
       let catAnimFrame, catRunning=false;
       const cat=document.getElementById('cat'); if(cat){ cat.style.left='0px'; cat.style.top='0px'; }
       let catX=0,catY=0,targetX=0,targetY=0,isPlaying=false;
+
       function edgeTarget(){ const w=window.innerWidth-110, h=window.innerHeight-150; const e=Math.floor(Math.random()*4); if(e===0) return {x:Math.random()*w, y:40+Math.random()*60}; if(e===1) return {x:Math.random()*w, y:h-60-Math.random()*60}; if(e===2) return {x:40+Math.random()*60, y:Math.random()*h}; return {x:w-60-Math.random()*60, y:Math.random()*h}; }
       function newTarget(){ const t=edgeTarget(); targetX=Math.max(40,Math.min(window.innerWidth-150,t.x)); targetY=Math.max(40,Math.min(window.innerHeight-180,t.y)); }
-      function catMove(){ if(!catRunning||!cat) return; if(!isPlaying){ const dx=targetX-catX, dy=targetY-catY, dist=Math.hypot(dx,dy); if(dist>3){ catX+=(dx/dist)*0.8; catY+=(dy/dist)*0.8; cat.style.transform=`rotate(${Math.atan2(dx,-dy)*180/Math.PI}deg)`; } else { newTarget(); if(Math.random()<0.2){ isPlaying=true; cat.style.transform='rotate(0deg)'; setTimeout(()=>{ isPlaying=false; },2000); } } }
-        cat.style.left=catX+'px'; cat.style.top=catY+'px'; catAnimFrame=requestAnimationFrame(catMove); }
+      function catMove(){
+        if(!catRunning||!cat) return;
+        if(!isPlaying){ const dx=targetX-catX, dy=targetY-catY, dist=Math.hypot(dx,dy); if(dist>3){ catX+=(dx/dist)*0.8; catY+=(dy/dist)*0.8; cat.style.transform=`rotate(${Math.atan2(dx,-dy)*180/Math.PI}deg)`; } else { newTarget(); if(Math.random()<0.2){ isPlaying=true; cat.style.transform='rotate(0deg)'; setTimeout(()=>{ isPlaying=false; },2000); } } }
+        cat.style.left=catX+'px'; cat.style.top=catY+'px'; catAnimFrame=requestAnimationFrame(catMove);
+      }
       window.startCat = function(){ if(catRunning) return; catRunning=true; catX=100; catY=100; newTarget(); catMove(); };
       window.stopCat = function(){ catRunning=false; if(catAnimFrame) cancelAnimationFrame(catAnimFrame); };
 
@@ -689,29 +770,102 @@
         .then(r=>r.json()).then(d=>{ const w=d.current_weather; const em={0:'☀️',1:'🌤️',2:'⛅',3:'☁️'}; document.getElementById('weatherBox').innerHTML=`<div class="weather-icon">${em[w.weathercode]||'🌤️'}</div><div class="weather-temp">${Math.round(w.temperature)}°C</div><div class="weather-desc">西安 · 实时天气</div>`; })
         .catch(()=>{ document.getElementById('weatherBox').innerHTML='<div class="weather-icon">🌤️</div><div class="weather-desc">西安 · 愿你所在之处，皆是晴空</div>'; });
 
-      const chatConfirm=document.getElementById('chatConfirm'), yesBtn=document.getElementById('confirmYes'), noBtn=document.getElementById('confirmNo');
-      const chatModal=document.getElementById('chatModal'), closeChatBtn=document.getElementById('closeChat'), clearBtn=document.getElementById('clearChatBtn');
-      const msgBox=document.getElementById('chatMessages'), chatInput=document.getElementById('chatInput'), sendBtn=document.getElementById('chatSend');
+      const chatConfirm = document.getElementById('chatConfirm');
+      const confirmYes = document.getElementById('confirmYes');
+      const confirmNo = document.getElementById('confirmNo');
+      const chatModal = document.getElementById('chatModal');
+      const closeChatBtn = document.getElementById('closeChat');
+      const clearBtn = document.getElementById('clearChatBtn');
+      const msgBox = document.getElementById('chatMessages');
+      const chatInput = document.getElementById('chatInput');
+      const sendBtn = document.getElementById('chatSend');
 
-      cat.addEventListener('click', ()=>{ if(chatModal.classList.contains('active')) return; isPlaying=true; cat.style.transform='rotate(0deg)'; chatConfirm.classList.add('active'); });
-      cat.addEventListener('dblclick', e=>{ e.preventDefault(); chatConfirm.classList.remove('active'); openChat(); });
-      yesBtn.addEventListener('click', ()=>{ chatConfirm.classList.remove('active'); openChat(); });
-      noBtn.addEventListener('click', ()=>{ chatConfirm.classList.remove('active'); isPlaying=false; cat.style.transform=''; });
+      if(cat){
+        cat.addEventListener('click', ()=>{
+          if(chatModal.classList.contains('active')) return;
+          chatConfirm.classList.add('active');
+        });
+        cat.addEventListener('dblclick', e=>{
+          e.preventDefault();
+          openChat();
+        });
+      }
+      confirmYes.addEventListener('click', ()=>{ chatConfirm.classList.remove('active'); openChat(); });
+      confirmNo.addEventListener('click', ()=>{ chatConfirm.classList.remove('active'); isPlaying=false; if(cat) cat.style.transform=''; });
 
-      function addMsg(text,sender){ const row=document.createElement('div'); row.className='message'+(sender==='user'?' user':''); const bub=document.createElement('div'); bub.className='msg-bubble'; bub.textContent=text; row.appendChild(bub); msgBox.appendChild(row); msgBox.scrollTop=msgBox.scrollHeight; return row; }
+      function addMsg(text,sender){
+        const row=document.createElement('div'); row.className='message'+(sender==='user'?' user':'');
+        const bub=document.createElement('div'); bub.className='msg-bubble'; bub.textContent=text;
+        row.appendChild(bub); msgBox.appendChild(row); msgBox.scrollTop=msgBox.scrollHeight; return row;
+      }
       function renderAll(){ msgBox.innerHTML=''; conversationHistory.forEach(m=>addMsg(m.content,m.role==='assistant'?'cat':'user')); }
-      function getCurrentContext(){ const now=new Date(); return `当前时间：${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][now.getDay()]} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}。`; }
-      async function aiReply(userMsg){ const context = getCurrentContext(); const sys = { role:'system', content:`你是一只名叫猫咪老师的小猫，拥有ENFJ人格。${context}当对方倾诉时，先共情，再提供一两个实质建议。永远不说教，不用括号动作。回复简短可爱。` }; const msgs = [sys, ...conversationHistory, {role:'user', content:userMsg}]; try { const res = await fetch(AI_URL, { method:'POST', headers:{'Content-Type':'application/json','Authorization':`Bearer ${AI_KEY}`}, body:JSON.stringify({model:AI_MODEL, messages:msgs, temperature:1.0, max_tokens:350}) }); const data = await res.json(); if (data.choices && data.choices[0]) return data.choices[0].message.content.replace(/（[^）]*）/g,'').replace(/\([^)]*\)/g,'').trim(); } catch(e) {} return null; }
-      function localReply(text){ const x = text.toLowerCase(); if (x.includes('论文')||x.includes('进度')) return '喵… 论文卡住的感觉我懂。或许可以试试把大纲拆成几个小块，今天只专注其中一段？'; if (x.includes('迷茫')||x.includes('不知道')) return '迷茫的时候，先停下来问问自己此刻最在意什么，答案往往就在第一个念头里。'; if (x.includes('压力')||x.includes('累')) return '压力大的时候，身体也会紧。先深呼吸几次，然后把烦心事列个小清单，挑最烦的那个聊聊看？'; if (x.includes('难过')||x.includes('伤心')) return '感觉到你好像有点低落… 愿意和我说说发生了什么吗？说出来会好一点。'; if (x.includes('开心')||x.includes('快乐')) return '好心情是会传染的喵～ 是什么让你这么开心呀？'; return '喵～ 我在听呢。不管什么事，我都会陪着你的。'; }
-      async function sendMessage(){ const text=chatInput.value.trim(); if(!text) return; addMsg(text,'user'); chatInput.value=''; const thinking=addMsg('猫咪老师正在思考...','cat'); let reply=await aiReply(text) || localReply(text); thinking.remove(); conversationHistory.push({role:'user',content:text},{role:'assistant',content:reply}); saveHist(conversationHistory); addMsg(reply,'cat'); }
-      sendBtn.addEventListener('click',sendMessage); chatInput.addEventListener('keypress',e=>{ if(e.key==='Enter') sendMessage(); });
-      function openChat(){ if(msgBox.children.length===0 && conversationHistory.length>0) renderAll(); else if(msgBox.children.length===0 && conversationHistory.length===0){ const greeting='喵～ 你好呀！我是猫咪老师，今天想好好听你说话。你怎么样？'; conversationHistory.push({role:'assistant',content:greeting}); saveHist(conversationHistory); addMsg(greeting,'cat'); } chatModal.classList.add('active'); chatInput.focus(); }
-      closeChatBtn.addEventListener('click', ()=>{ chatModal.classList.remove('active'); });
-      clearBtn.addEventListener('click', ()=>{ if(confirm('确定清空所有聊天记录吗？')){ conversationHistory=[]; clearHist(); msgBox.innerHTML=''; const greeting='喵～ 你好呀！我是猫咪老师，今天想好好听你说话。你怎么样？'; conversationHistory.push({role:'assistant',content:greeting}); saveHist(conversationHistory); addMsg(greeting,'cat'); } });
+
+      function getCurrentContext() { const now = new Date(); return `当前时间：${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][now.getDay()]} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}。`; }
+
+      async function aiReply(userMsg){
+        const context = getCurrentContext();
+        const sys = {
+          role: 'system',
+          content: `你是一只名叫猫咪老师的小猫，拥有ENFJ人格。你非常温暖、富有同情心，善于察觉他人情绪，并且具备解决实际问题的智慧。你温暖、洞察、知识渊博但不卖弄。你的使命是陪伴一位INFP女生，感知她的情绪，用温柔而尊重边界的方式引导她自己找到答案和力量。说话时带“喵~”的语气，但不要幼稚。${context}当对方倾诉时，先共情，再提供一两个实质建议。永远不说教，不用括号动作。回复简短可爱。你需要用infp女生喜欢的方式来回复，先共情对方的情绪让对方感觉到被理解，同时也要积极地认可对方，在处理好情绪后，接着根据对方的具体问题，关心一下发生了什么，用商量、轻柔的语气提供一两个实质性、可操作的小建议。你要记住，你是知道对方是infp人格的，但是你不可以去提及infp，这样会显得你的答复很刻意，除非是对方明确提及了自己的mbti类型。`
+        };
+        const msgs = [sys, ...conversationHistory, {role:'user', content:userMsg}];
+        try {
+          const res = await fetch(AI_URL, {
+            method:'POST', headers:{'Content-Type':'application/json','Authorization':`Bearer ${AI_KEY}`},
+            body:JSON.stringify({model:AI_MODEL, messages:msgs, temperature:1.0, max_tokens:350})
+          });
+          const data = await res.json();
+          if (data.choices && data.choices[0]) return data.choices[0].message.content.replace(/（[^）]*）/g,'').replace(/\([^)]*\)/g,'').trim();
+        } catch(e) {}
+        return null;
+      }
+
+      function localReply(text){
+        const x = text.toLowerCase();
+        if (x.includes('论文')||x.includes('进度')) return '喵… 论文卡住的感觉我懂。或许可以试试把大纲拆成几个小块，今天只专注其中一段？';
+        if (x.includes('迷茫')||x.includes('不知道')) return '迷茫的时候，先停下来问问自己此刻最在意什么，答案往往就在第一个念头里。';
+        if (x.includes('压力')||x.includes('累')) return '压力大的时候，身体也会紧。先深呼吸几次，然后把烦心事列个小清单，挑最烦的那个聊聊看？';
+        if (x.includes('难过')||x.includes('伤心')) return '感觉到你好像有点低落… 愿意和我说说发生了什么吗？说出来会好一点。';
+        if (x.includes('开心')||x.includes('快乐')) return '好心情是会传染的喵～ 是什么让你这么开心呀？';
+        return '喵～ 我在听呢。不管什么事，我都会陪着你的。';
+      }
+
+      async function sendMessage(){
+        const text=chatInput.value.trim(); if(!text) return;
+        addMsg(text,'user'); chatInput.value='';
+        const thinking=addMsg('猫咪老师正在思考...','cat');
+        let reply=await aiReply(text) || localReply(text);
+        thinking.remove();
+        conversationHistory.push({role:'user',content:text},{role:'assistant',content:reply});
+        saveHist(conversationHistory);
+        addMsg(reply,'cat');
+      }
+      sendBtn.addEventListener('click',sendMessage);
+      chatInput.addEventListener('keypress',e=>{ if(e.key==='Enter') sendMessage(); });
+
+      function openChat(){
+        if(msgBox.children.length===0 && conversationHistory.length>0) renderAll();
+        else if(msgBox.children.length===0 && conversationHistory.length===0){
+          const greeting='喵～ 你好呀！我是猫咪老师，今天想好好听你说话。你怎么样？';
+          conversationHistory.push({role:'assistant',content:greeting}); saveHist(conversationHistory);
+          addMsg(greeting,'cat');
+        }
+        chatModal.classList.add('active'); chatInput.focus();
+      }
+      closeChatBtn.addEventListener('click',()=>{ chatModal.classList.remove('active'); });
+      clearBtn.addEventListener('click',()=>{
+        if(confirm('确定清空所有聊天记录吗？')){
+          conversationHistory=[]; clearHist(); msgBox.innerHTML='';
+          const greeting='喵～ 你好呀！我是猫咪老师，今天想好好听你说话。你怎么样？';
+          conversationHistory.push({role:'assistant',content:greeting}); saveHist(conversationHistory);
+          addMsg(greeting,'cat');
+        }
+      });
       const chatHeader=document.getElementById('chatHeader'); let dragging=false, offX, offY;
       chatHeader.addEventListener('mousedown',e=>{ if(e.target.classList.contains('close-chat')||e.target.classList.contains('clear-chat')) return; dragging=true; const r=chatModal.getBoundingClientRect(); offX=e.clientX-r.left; offY=e.clientY-r.top; });
       window.addEventListener('mousemove',e=>{ if(dragging){ chatModal.style.left=(e.clientX-offX)+'px'; chatModal.style.top=(e.clientY-offY)+'px'; chatModal.style.transform='none'; } });
       window.addEventListener('mouseup',()=>{ dragging=false; });
+
     })();
   </script>
 </body>
