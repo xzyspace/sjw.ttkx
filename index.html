@@ -136,21 +136,17 @@
     /* 全屏预览 - 动态真·全屏 */
     .lightbox {
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.95);
       z-index: 1000;
       display: none;
       align-items: center;
       justify-content: center;
-      background: rgba(0,0,0,0.95);
     }
     .lightbox.active { display: flex; }
     .lightbox-content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
     }
     .lightbox-content img {
       max-width: 100%;
@@ -398,6 +394,9 @@
       viewportMeta.setAttribute('content', `width=device-width, initial-scale=${scale}, maximum-scale=2.0, minimum-scale=0.375, user-scalable=yes, viewport-fit=cover`);
     }
 
+    // 保存当前页面正常缩放
+    let currentScale = 0.375;
+
     // 问答验证
     (function() {
       const quizOverlay = document.getElementById('globalQuizOverlay');
@@ -427,7 +426,13 @@
     (function() {
       const pages = { home: document.getElementById('homePage'), photography: document.getElementById('photographyPage'), happyBirthday: document.getElementById('hbPage'), research: document.getElementById('researchPage') };
       const backBtn = document.getElementById('backToHomeBtn');
+      const lb = document.getElementById('lightbox');
+
       function showPage(id) {
+        // 如果灯箱正打开，先关闭（恢复缩放）
+        if (lb.classList.contains('active')) {
+          closeLightbox();
+        }
         Object.values(pages).forEach(p => p.classList.remove('active'));
         if (pages[id]) pages[id].classList.add('active');
         backBtn.classList.toggle('show', id !== 'home');
@@ -435,8 +440,10 @@
         else stopCat();
 
         if (id === 'home' || id === 'photography') {
+          currentScale = 0.375;
           setViewportScale(0.375);
         } else {
+          currentScale = 0.5;
           setViewportScale(0.5);
         }
       }
@@ -451,10 +458,7 @@
       async function delPhoto(id){ if(!db) await openDB(); return new Promise((res,rej)=>{ const tx=db.transaction(STORE,'readwrite'); const req=tx.objectStore(STORE).delete(id); req.onsuccess=()=>res(); req.onerror=e=>rej(e.target.error); }); }
       async function clearAllPhotos(){ if(!db) await openDB(); return new Promise((res,rej)=>{ const tx=db.transaction(STORE,'readwrite'); const req=tx.objectStore(STORE).clear(); req.onsuccess=()=>res(); req.onerror=e=>rej(e.target.error); }); }
 
-      // 初始照片数据（等你提供后填入）
-      const defPhotos = [
-        // 格式：{ url: '照片1.jpg', caption: '描述文字', date: '2026-05-17' }
-      ];
+      const defPhotos = []; // 可添加初始照片
 
       let pendingBase64=null;
       function randomH(){ return Math.floor(Math.random()*61)+160; }
@@ -472,42 +476,57 @@
         document.querySelectorAll('.photo-card').forEach(c=>c.addEventListener('click',e=>{ if(!e.target.classList.contains('delete-photo')) openLightbox(parseInt(c.dataset.id)); }));
         document.querySelectorAll('.delete-photo').forEach(b=>b.addEventListener('click',async e=>{ e.stopPropagation(); await delPhoto(parseInt(b.dataset.id)); renderPhotos(); }));
       }
-      const lb=document.getElementById('lightbox'), lbImg=document.getElementById('lightboxImg'), prevBtn=document.getElementById('prevBtn'), nextBtn=document.getElementById('nextBtn');
+      const lbImg=document.getElementById('lightboxImg'), prevBtn=document.getElementById('prevBtn'), nextBtn=document.getElementById('nextBtn');
       let curPhotos=[], curId=null;
 
-      // 动态全屏函数
-      function resizeLightbox() {
+      // 全屏灯箱：打开时缩放1.0，关闭时恢复
+      function openLightbox(id){
+        // 先设置缩放为1.0，确保全屏
+        setViewportScale(1.0);
+        loadPhotos().then(photos => {
+          curPhotos = photos;
+          const i = curPhotos.findIndex(p => p.id === id);
+          if (i === -1) return;
+          curId = id;
+          showPhoto(i);
+          lb.style.width = window.innerWidth + 'px';
+          lb.style.height = window.innerHeight + 'px';
+          lb.classList.add('active');
+        });
+      }
+      function showPhoto(i){
+        const p = curPhotos[i];
+        curId = p.id;
+        lbImg.src = p.url;
+        prevBtn.style.display = i > 0 ? 'block' : 'none';
+        nextBtn.style.display = i < curPhotos.length - 1 ? 'block' : 'none';
+      }
+      function closeLightbox(){
+        lb.classList.remove('active');
+        setViewportScale(currentScale); // 恢复之前的缩放
+      }
+      document.getElementById('closeLightbox').addEventListener('click', closeLightbox);
+      lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+      prevBtn.addEventListener('click', () => navigate(-1));
+      nextBtn.addEventListener('click', () => navigate(1));
+      function navigate(d){
+        const i = curPhotos.findIndex(p => p.id === curId);
+        if (i === -1) return;
+        const ni = i + d;
+        if (ni >= 0 && ni < curPhotos.length) showPhoto(ni);
+      }
+      document.addEventListener('keydown', e => {
+        if (!lb.classList.contains('active')) return;
+        if (e.key === 'ArrowLeft') navigate(-1);
+        else if (e.key === 'ArrowRight') navigate(1);
+        else if (e.key === 'Escape') closeLightbox();
+      });
+      window.addEventListener('resize', () => {
         if (lb.classList.contains('active')) {
           lb.style.width = window.innerWidth + 'px';
           lb.style.height = window.innerHeight + 'px';
         }
-      }
-      window.addEventListener('resize', resizeLightbox);
-      window.addEventListener('orientationchange', () => setTimeout(resizeLightbox, 100));
-
-      async function openLightbox(id){
-        curPhotos=await loadPhotos();
-        const i=curPhotos.findIndex(p=>p.id===id);
-        if(i===-1) return;
-        curId=id;
-        showPhoto(i);
-        // 设置灯箱尺寸为视口大小
-        lb.style.width = window.innerWidth + 'px';
-        lb.style.height = window.innerHeight + 'px';
-        lb.classList.add('active');
-      }
-      function showPhoto(i){
-        const p=curPhotos[i];
-        curId=p.id;
-        lbImg.src=p.url;
-        prevBtn.style.display=i>0?'block':'none';
-        nextBtn.style.display=i<curPhotos.length-1?'block':'none';
-      }
-      document.getElementById('closeLightbox').addEventListener('click',()=>lb.classList.remove('active'));
-      lb.addEventListener('click',e=>{ if(e.target===lb) lb.classList.remove('active'); });
-      prevBtn.addEventListener('click',()=>navigate(-1)); nextBtn.addEventListener('click',()=>navigate(1));
-      function navigate(d){ const i=curPhotos.findIndex(p=>p.id===curId); if(i===-1) return; const ni=i+d; if(ni>=0&&ni<curPhotos.length) showPhoto(ni); }
-      document.addEventListener('keydown',e=>{ if(!lb.classList.contains('active')) return; if(e.key==='ArrowLeft') navigate(-1); else if(e.key==='ArrowRight') navigate(1); else if(e.key==='Escape') lb.classList.remove('active'); });
+      });
 
       function compressImg(file){ return new Promise((res,rej)=>{ const reader=new FileReader(); reader.onload=e=>{ const img=new Image(); img.onload=()=>{ let w=img.width, h=img.height; if(w>800||h>800){ if(w>h){ h*=800/w; w=800; } else { w*=800/h; h=800; } } const canvas=document.createElement('canvas'); canvas.width=w; canvas.height=h; const ctx=canvas.getContext('2d'); ctx.drawImage(img,0,0,w,h); res(canvas.toDataURL('image/jpeg',0.7)); }; img.onerror=rej; img.src=e.target.result; }; reader.onerror=rej; reader.readAsDataURL(file); }); }
       async function addPhoto(url,caption,date){ await savePhoto({url,caption,date}); renderPhotos(); document.getElementById('imgUrl').value=''; document.getElementById('caption').value=''; document.getElementById('fileNameDisplay').textContent=''; pendingBase64=null; updateDate(); }
@@ -570,7 +589,7 @@
       });
       initLetterViewer();
 
-      // ========== Happy Birthday 猫咪老师 ==========
+      // Happy Birthday 猫咪老师
       const AI_URL='https://api.deepseek.com/v1/chat/completions', AI_KEY='sk-4c64c34cc08349e19f4ffe100a7f9987', AI_MODEL='deepseek-chat';
       const HIST_KEY='sjw_chat_hist';
       function loadHist(){ return JSON.parse(localStorage.getItem(HIST_KEY)||'[]'); }
@@ -605,39 +624,21 @@
       const chatInput = document.getElementById('chatInput');
       const sendBtn = document.getElementById('chatSend');
 
-      cat.addEventListener('click', () => {
-        if (chatModal.classList.contains('active')) return;
-        isPlaying = true; cat.style.transform = 'rotate(0deg)';
-        chatConfirm.classList.add('active');
-      });
-      cat.addEventListener('dblclick', (e) => {
-        e.preventDefault();
-        isPlaying = true; cat.style.transform = 'rotate(0deg)';
-        openChat();
-      });
+      cat.addEventListener('click', () => { if (chatModal.classList.contains('active')) return; isPlaying = true; cat.style.transform = 'rotate(0deg)'; chatConfirm.classList.add('active'); });
+      cat.addEventListener('dblclick', (e) => { e.preventDefault(); isPlaying = true; cat.style.transform = 'rotate(0deg)'; openChat(); });
       yesBtn.addEventListener('click', () => { chatConfirm.classList.remove('active'); openChat(); });
       noBtn.addEventListener('click', () => { chatConfirm.classList.remove('active'); isPlaying = false; cat.style.transform = ''; });
 
       function addMsg(text,sender){ const row=document.createElement('div'); row.className='message'+(sender==='user'?' user':''); const bub=document.createElement('div'); bub.className='msg-bubble'; bub.textContent=text; row.appendChild(bub); msgBox.appendChild(row); msgBox.scrollTop=msgBox.scrollHeight; return row; }
       function renderAll(){ msgBox.innerHTML=''; conversationHistory.forEach(m=>addMsg(m.content,m.role==='assistant'?'cat':'user')); }
 
-      function getCurrentContext() {
-        const now = new Date();
-        return `当前时间：${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][now.getDay()]} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}。`;
-      }
+      function getCurrentContext() { const now = new Date(); return `当前时间：${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][now.getDay()]} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}。`; }
 
       async function aiReply(userMsg){
-        const context = getCurrentContext();
-        const sys = {
-          role: 'system',
-          content: `你是一只名叫猫咪老师的小猫，拥有ENFJ人格。你非常温暖、富有同情心，善于察觉他人情绪，并且具备解决实际问题的智慧。${context}当对方倾诉时，先共情，再提供一两个实质建议。永远不说教，不用括号动作。回复简短可爱。`
-        };
+        const sys = { role:'system', content:`你是一只名叫猫咪老师的小猫，拥有ENFJ人格。${getCurrentContext()}当对方倾诉时，先共情，再提供一两个实质建议。永远不说教，不用括号动作。回复简短可爱。` };
         const msgs = [sys, ...conversationHistory, {role:'user', content:userMsg}];
         try {
-          const res = await fetch(AI_URL, {
-            method: 'POST', headers: {'Content-Type':'application/json', 'Authorization':`Bearer ${AI_KEY}`},
-            body: JSON.stringify({model: AI_MODEL, messages: msgs, temperature: 1.0, max_tokens: 350})
-          });
+          const res = await fetch(AI_URL, { method:'POST', headers:{'Content-Type':'application/json','Authorization':`Bearer ${AI_KEY}`}, body:JSON.stringify({model:AI_MODEL,messages:msgs,temperature:1.0,max_tokens:350}) });
           const data = await res.json();
           if (data.choices && data.choices[0]) return data.choices[0].message.content.replace(/（[^）]*）/g,'').replace(/\([^)]*\)/g,'').trim();
         } catch(e) {}
@@ -658,51 +659,27 @@
 
       function openChat(){
         if(msgBox.children.length===0 && conversationHistory.length>0) renderAll();
-        else if(msgBox.children.length===0 && conversationHistory.length===0){
-          const greeting='喵～ 你好呀！我是猫咪老师，今天想好好听你说话。你怎么样？';
-          conversationHistory.push({role:'assistant',content:greeting}); saveHist(conversationHistory); addMsg(greeting,'cat');
-        }
+        else if(msgBox.children.length===0 && conversationHistory.length===0){ const greeting='喵～ 你好呀！我是猫咪老师，今天想好好听你说话。你怎么样？'; conversationHistory.push({role:'assistant',content:greeting}); saveHist(conversationHistory); addMsg(greeting,'cat'); }
         chatModal.classList.add('active'); chatInput.focus();
       }
       closeChatBtn.addEventListener('click',()=>{ chatModal.classList.remove('active'); });
-      clearBtn.addEventListener('click',()=>{
-        if(confirm('确定清空所有聊天记录吗？')){
-          conversationHistory=[]; clearHist(); msgBox.innerHTML='';
-          const greeting='喵～ 你好呀！我是猫咪老师，今天想好好听你说话。你怎么样？';
-          conversationHistory.push({role:'assistant',content:greeting}); saveHist(conversationHistory); addMsg(greeting,'cat');
-        }
-      });
+      clearBtn.addEventListener('click',()=>{ if(confirm('确定清空所有聊天记录吗？')){ conversationHistory=[]; clearHist(); msgBox.innerHTML=''; const greeting='喵～ 你好呀！我是猫咪老师，今天想好好听你说话。你怎么样？'; conversationHistory.push({role:'assistant',content:greeting}); saveHist(conversationHistory); addMsg(greeting,'cat'); } });
       const chatHeader=document.getElementById('chatHeader'); let dragging=false, offX, offY;
       chatHeader.addEventListener('mousedown',e=>{ if(e.target.classList.contains('close-chat')||e.target.classList.contains('clear-chat')) return; dragging=true; const r=chatModal.getBoundingClientRect(); offX=e.clientX-r.left; offY=e.clientY-r.top; });
       window.addEventListener('mousemove',e=>{ if(dragging){ chatModal.style.left=(e.clientX-offX)+'px'; chatModal.style.top=(e.clientY-offY)+'px'; chatModal.style.transform='none'; } });
       window.addEventListener('mouseup',()=>{ dragging=false; });
 
-      // Research (清空计划内容)
-      const RKEY='sjw_research';
-      const defRData = {
-        travel: { title:'🗺️ 未来旅行计划', items:[] },
-        movies: { title:'🎬 电影之夜', items:[] },
-        music: { title:'🎵 音乐推荐', items:[] },
-        ideas: { title:'💡 灵感碎片', items:[] }
-      };
+      // Research
+      const RKEY='sjw_research', defRData = { travel:{title:'🗺️ 未来旅行计划',items:[]}, movies:{title:'🎬 电影之夜',items:[]}, music:{title:'🎵 音乐推荐',items:[]}, ideas:{title:'💡 灵感碎片',items:[]} };
       function loadR(){ return JSON.parse(localStorage.getItem(RKEY)||JSON.stringify(defRData)); }
       function saveR(d){ localStorage.setItem(RKEY,JSON.stringify(d)); }
       function renderR(){
         const cont=document.getElementById('categoriesContainer'); if(!cont) return;
         const data=loadR();
         cont.innerHTML=Object.entries(data).map(([k,v])=>`<div class="category" data-cat="${k}"><div class="cat-title">${v.title}</div><ul class="item-list">${v.items.map((it,i)=>`<li><span class="item-text" contenteditable="true" data-idx="${i}">${it}</span><button class="delete-btn" data-idx="${i}">✕</button></li>`).join('')}</ul><div class="add-item-form"><input type="text" placeholder="添加新条目..." class="new-item-input"><button class="add-item-btn">添加</button></div></div>`).join('');
-        document.querySelectorAll('.category').forEach(catDiv=>{
-          const catKey=catDiv.dataset.cat;
-          catDiv.querySelectorAll('.item-text').forEach(span=>span.addEventListener('blur',()=>{ const d=loadR(); d[catKey].items[span.dataset.idx]=span.textContent; saveR(d); }));
-          catDiv.querySelectorAll('.delete-btn').forEach(btn=>btn.addEventListener('click',()=>{ const d=loadR(); d[catKey].items.splice(btn.dataset.idx,1); saveR(d); renderR(); }));
-          const inp=catDiv.querySelector('.new-item-input'), addBtn=catDiv.querySelector('.add-item-btn');
-          addBtn.addEventListener('click',()=>{ if(inp.value.trim()){ const d=loadR(); d[catKey].items.push(inp.value.trim()); saveR(d); renderR(); } });
-          inp.addEventListener('keypress',e=>{ if(e.key==='Enter'){ if(inp.value.trim()){ const d=loadR(); d[catKey].items.push(inp.value.trim()); saveR(d); renderR(); } } });
-        });
+        document.querySelectorAll('.category').forEach(catDiv=>{ const catKey=catDiv.dataset.cat; catDiv.querySelectorAll('.item-text').forEach(span=>span.addEventListener('blur',()=>{ const d=loadR(); d[catKey].items[span.dataset.idx]=span.textContent; saveR(d); })); catDiv.querySelectorAll('.delete-btn').forEach(btn=>btn.addEventListener('click',()=>{ const d=loadR(); d[catKey].items.splice(btn.dataset.idx,1); saveR(d); renderR(); })); const inp=catDiv.querySelector('.new-item-input'), addBtn=catDiv.querySelector('.add-item-btn'); addBtn.addEventListener('click',()=>{ if(inp.value.trim()){ const d=loadR(); d[catKey].items.push(inp.value.trim()); saveR(d); renderR(); } }); inp.addEventListener('keypress',e=>{ if(e.key==='Enter'){ if(inp.value.trim()){ const d=loadR(); d[catKey].items.push(inp.value.trim()); saveR(d); renderR(); } } }); });
       }
       renderR();
-
-      setViewportScale(0.375);
     })();
   </script>
 </body>
