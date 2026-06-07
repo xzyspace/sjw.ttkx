@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
+    /* 所有样式与之前完全相同，为节省篇幅已保留完整，实际不会影响功能 */
     * { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior: smooth; }
     body {
@@ -342,7 +343,6 @@
 
       <div class="chat-modal" id="chatModal">
         <div class="chat-header" id="chatHeader"><div class="chat-header-left"><span>🐱 猫咪老师</span><button class="clear-chat" id="clearChatBtn">🗑️</button></div><button class="close-chat" id="closeChat">&times;</button></div>
-        <!-- 新增提示：聊天仅通过本地浏览器存储 -->
         <div style="font-size:0.7rem; color:#b0a0a0; text-align:center; padding:4px 0; background:rgba(255,248,240,0.6); border-bottom:1px solid #f0e0d5;">💬 聊天仅通过本地浏览器存储</div>
         <div class="chat-messages" id="chatMessages"></div>
         <div class="chat-input-area"><input type="text" class="chat-input" id="chatInput" placeholder="跟小猫说点什么..."><button class="chat-send" id="chatSend">发送</button></div>
@@ -351,7 +351,6 @@
 
     <div class="page research-page" id="researchPage">
       <h1 style="font-family:'Caveat',cursive; text-align:center; color:#4a3535; margin-bottom:30px;">🔭 探索中……</h1>
-      <!-- 新增提示：记录仅通过本地浏览器存储 -->
       <div style="font-size:0.8rem; color:#8b6b5b; text-align:center; margin-bottom:20px;">📝 记录仅通过本地浏览器存储</div>
       <div id="categoriesContainer"></div>
       <div class="letter-section">
@@ -693,7 +692,7 @@
 
       let pendingBase64=null;
       function randomH(){ return Math.floor(Math.random()*61)+160; }
-      function isBeforeCutoff(){ const t=new Date(), c=new Date('2026-06-07'); return t<c; }
+      function isBeforeCutoff(){ const t=new Date(), c=new Date('2026-06-08'); return t<c; }
       function updateDate(){
         const di=document.getElementById('photoDate'), dh=document.getElementById('dateLockedHint'), ts=new Date().toISOString().split('T')[0];
         if(isBeforeCutoff()){ di.removeAttribute('readonly'); di.value=ts; dh.style.display='none'; }
@@ -762,14 +761,45 @@
         try{ pendingBase64=await compressImg(file); document.getElementById('fileNameDisplay').textContent=file.name+' (已压缩)'; document.getElementById('imgUrl').placeholder='已从相册选择：'+file.name; }catch{ alert('图片处理失败'); } e.target.value='';
       });
       
+      // 管理面板：只保留 export 和 import 功能
       document.getElementById('adminBtn').addEventListener('click',()=>{
-        const act=prompt('管理面板（长按图片点击右上角可删除）：\nreset - 重置默认照片\nclear - 清空所有照片\nexport - 导出备份\nimport - 导入备份（追加）');
-        if(act==='reset'){ if(confirm('重置将删除所有现有照片并恢复默认照片，确定吗？')){ (async()=>{ await DataService.clearAllPhotos(); for(const p of defPhotos) await DataService.savePhoto(p); renderPhotos(); })(); } }
-        else if(act==='clear'){ if(confirm('确定清空所有照片？')){ (async()=>{ await DataService.clearAllPhotos(); renderPhotos(); })(); } }
-        else if(act==='export'){ (async()=>{ const data=JSON.stringify(await DataService.loadPhotos(),null,2); const blob=new Blob([data],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='photos_backup.json'; a.click(); })(); }
-        else if(act==='import'){ const inp=document.createElement('input'); inp.type='file'; inp.accept='.json'; inp.onchange=e=>{ const fr=new FileReader(); fr.onload=async ev=>{ try{ const imp=JSON.parse(ev.target.result); if(Array.isArray(imp)){ for(const p of imp) await DataService.savePhoto(p); renderPhotos(); alert('导入成功！照片已追加。'); } else alert('文件格式不正确'); }catch{ alert('解析失败'); } }; fr.readAsText(e.target.files[0]); }; inp.click(); }
+        const act=prompt('管理面板：\nexport - 导出备份（保存所有照片信息）\nimport - 导入备份（追加照片）\n\n注意：删除照片请点击单张右上角 ✕');
+        if(act==='export'){
+          (async()=>{
+            const data=JSON.stringify(await DataService.loadPhotos(),null,2);
+            const blob=new Blob([data],{type:'application/json'});
+            const a=document.createElement('a');
+            a.href=URL.createObjectURL(blob);
+            a.download='photos_backup.json';
+            a.click();
+          })();
+        }
+        else if(act==='import'){
+          const inp=document.createElement('input');
+          inp.type='file';
+          inp.accept='.json';
+          inp.onchange=e=>{
+            const fr=new FileReader();
+            fr.onload=async ev=>{
+              try{
+                const imp=JSON.parse(ev.target.result);
+                if(Array.isArray(imp)){
+                  for(const p of imp) await DataService.savePhoto(p);
+                  renderPhotos();
+                  alert('导入成功！照片已追加。');
+                } else alert('文件格式不正确');
+              }catch{ alert('解析失败'); }
+            };
+            fr.readAsText(e.target.files[0]);
+          };
+          inp.click();
+        }
+        else if(act !== null){
+          alert('未知命令。仅支持 export 和 import。');
+        }
       });
       
+      // 初始化默认照片（仅当云端为空时才会自动添加）
       DataService.initDefault(defPhotos).then(() => renderPhotos());
       updateDate();
 
