@@ -763,7 +763,7 @@
       
       // 管理面板：只保留 export 和 import 功能
       document.getElementById('adminBtn').addEventListener('click',()=>{
-        const act=prompt('管理面板：\nexport - 导出备份（保存所有照片信息）\nimport - 导入备份（追加照片）\n\n注意：删除照片请点击单张右上角 ✕');
+        const act=prompt('管理面板：\nexport - 导出备份（保存所有照片信息）\nimport - 导入备份（追加照片）\n\n注意：长按图片点击右上角可删除');
         if(act==='export'){
           (async()=>{
             const data=JSON.stringify(await DataService.loadPhotos(),null,2);
